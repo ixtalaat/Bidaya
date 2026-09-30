@@ -18,4 +18,34 @@ return [
         'guardian' => 'Guardian',
         'other' => 'Other',
     ],
+    'course_statuses' => [
+        'draft' => 'Draft',
+        'published' => 'Published',
+        'active' => 'Active',
+        'completed' => 'Completed',
+        'archived' => 'Archived',
+    ],
+    'teacher_statuses' => [
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+    ],
+    'group_statuses' => [
+        'draft' => 'Draft',
+        'active' => 'Active',
+        'completed' => 'Completed',
+        'cancelled' => 'Cancelled',
+    ],
+    'enrollment_statuses' => [
+        'pending' => 'Pending',
+        'active' => 'Active',
+        'suspended' => 'Suspended',
+        'completed' => 'Completed',
+        'cancelled' => 'Cancelled',
+    ],
+    'invoice_statuses' => [
+        'pending' => 'Pending',
+        'partially_paid' => 'Partially paid',
+        'paid' => 'Paid',
+        'cancelled' => 'Cancelled',
+    ],
 ];
