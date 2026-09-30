@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\GuardiansController;
+use App\Http\Controllers\StudentsController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +35,9 @@ Route::middleware('guest')->group(function (): void {
 Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
+
+    Route::middleware('role:super_admin,manager')->group(function (): void {
+        Route::resource('parents', GuardiansController::class)->parameters(['parents' => 'guardian']);
+        Route::resource('students', StudentsController::class);
+    });
 });

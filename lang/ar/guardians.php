@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'title' => 'أولياء الأمور',
+    'create_title' => 'إضافة ولي أمر',
+    'edit_title' => 'تعديل ولي الأمر',
+    'show_title' => 'بيانات ولي الأمر',
+    'name' => 'الاسم بالكامل',
+    'phone' => 'رقم الهاتف',
+    'email' => 'البريد الإلكتروني',
+    'address' => 'العنوان',
+    'emergency_contact' => 'جهة الطوارئ',
+    'children' => 'الأبناء',
+    'children_count' => 'الأبناء',
+    'search_placeholder' => 'ابحث بالاسم أو الهاتف…',
+    'search_button' => 'بحث',
+    'create_button' => 'إضافة ولي أمر',
+    'save_button' => 'حفظ ولي الأمر',
+    'update_button' => 'تحديث ولي الأمر',
+    'delete_button' => 'حذف',
+    'delete_confirm' => 'حذف ولي الأمر؟ سيبقى الأبناء المرتبطون.',
+    'empty' => 'لا يوجد أولياء أمور.',
+    'created' => 'تمت إضافة ولي الأمر.',
+    'updated' => 'تم تحديث ولي الأمر.',
+    'deleted' => 'تم حذف ولي الأمر.',
+];

@@ -19,6 +19,10 @@
             </a>
             @auth
                 <a href="{{ route('dashboard') }}" class="text-slate-600 hover:text-indigo-700">{{ __('layout.dashboard') }}</a>
+                @can('manage-center')
+                    <a href="{{ route('students.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('students.title') }}</a>
+                    <a href="{{ route('parents.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('guardians.title') }}</a>
+                @endcan
                 <span class="text-slate-400">{{ auth()->user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
@@ -29,6 +33,9 @@
     </div>
 </header>
 <main class="mx-auto max-w-5xl px-4 py-8">
+    @if (session('status'))
+        <p class="mb-4 rounded bg-green-50 px-3 py-2 text-sm text-green-700">{{ session('status') }}</p>
+    @endif
     @yield('content')
 </main>
 </body>

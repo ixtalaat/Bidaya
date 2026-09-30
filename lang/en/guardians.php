@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'title' => 'Parents',
+    'create_title' => 'Add parent',
+    'edit_title' => 'Edit parent',
+    'show_title' => 'Parent details',
+    'name' => 'Full name',
+    'phone' => 'Phone number',
+    'email' => 'Email',
+    'address' => 'Address',
+    'emergency_contact' => 'Emergency contact',
+    'children' => 'Children',
+    'children_count' => 'Children',
+    'search_placeholder' => 'Search by name or phone…',
+    'search_button' => 'Search',
+    'create_button' => 'Add parent',
+    'save_button' => 'Save parent',
+    'update_button' => 'Update parent',
+    'delete_button' => 'Delete',
+    'delete_confirm' => 'Delete this parent? Linked children are kept.',
+    'empty' => 'No parents found.',
+    'created' => 'Parent added.',
+    'updated' => 'Parent updated.',
+    'deleted' => 'Parent deleted.',
+];
