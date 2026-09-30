@@ -2,8 +2,12 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\EnrollmentsController;
+use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\GuardiansController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\TeachersController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -39,5 +43,9 @@ Route::middleware('auth')->group(function (): void {
     Route::middleware('role:super_admin,manager')->group(function (): void {
         Route::resource('parents', GuardiansController::class)->parameters(['parents' => 'guardian']);
         Route::resource('students', StudentsController::class);
+        Route::resource('courses', CoursesController::class);
+        Route::resource('teachers', TeachersController::class);
+        Route::resource('groups', GroupsController::class);
+        Route::resource('enrollments', EnrollmentsController::class)->except(['destroy']);
     });
 });

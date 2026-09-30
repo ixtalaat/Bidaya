@@ -20,6 +20,10 @@
             @auth
                 <a href="{{ route('dashboard') }}" class="text-slate-600 hover:text-indigo-700">{{ __('layout.dashboard') }}</a>
                 @can('manage-center')
+                    <a href="{{ route('courses.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('courses.title') }}</a>
+                    <a href="{{ route('groups.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('groups.title') }}</a>
+                    <a href="{{ route('enrollments.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('enrollments.title') }}</a>
+                    <a href="{{ route('teachers.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('teachers.title') }}</a>
                     <a href="{{ route('students.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('students.title') }}</a>
                     <a href="{{ route('parents.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('guardians.title') }}</a>
                 @endcan
