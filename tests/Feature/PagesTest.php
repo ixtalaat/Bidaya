@@ -32,6 +32,7 @@ class PagesTest extends TestCase
         $response->assertOk();
         $response->assertSee('dir="rtl"', false);
         $response->assertSee('بداية');
+        $response->assertSee('<title>بداية', false);
     }
 
     public function test_about_and_contact_pages_render(): void

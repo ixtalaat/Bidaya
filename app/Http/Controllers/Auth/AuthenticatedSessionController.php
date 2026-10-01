@@ -31,6 +31,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        $request->session()->put('locale', config('app.fallback_locale', 'en'));
 
         return redirect()->route('home');
     }

@@ -88,6 +88,22 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect(route('home'));
     }
 
+    public function test_logout_resets_the_locale_to_english(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->withSession(['locale' => 'ar'])
+            ->actingAs($user)
+            ->post(route('logout'));
+
+        $response->assertRedirect(route('home'));
+        $response->assertSessionHas('locale', 'en');
+
+        $home = $this->get(route('home'));
+        $home->assertOk();
+        $home->assertSee('<title>Bidaya', false);
+    }
+
     public function test_guests_cannot_visit_the_dashboard(): void
     {
         $response = $this->get(route('dashboard'));

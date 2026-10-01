@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Bidaya') }} — @yield('title')</title>
+    <title>{{ __('layout.app_name') }} — @yield('title')</title>
     <meta name="theme-color" content="#2563eb">
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
