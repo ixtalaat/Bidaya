@@ -15,6 +15,9 @@
             </p>
         </div>
         <div class="flex shrink-0 gap-2">
+            <a href="{{ route('groups.schedules.index', $group) }}" class="rounded bg-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-800 hover:bg-slate-300">
+                {{ __('schedules.title') }}
+            </a>
             <a href="{{ route('enrollments.create', ['group_id' => $group->id]) }}" class="rounded bg-indigo-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-800">
                 {{ __('groups.enroll_button') }}
             </a>

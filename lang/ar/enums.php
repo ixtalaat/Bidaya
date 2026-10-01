@@ -48,4 +48,19 @@ return [
         'paid' => 'مدفوع',
         'cancelled' => 'ملغاة',
     ],
+    'days' => [
+        'sunday' => 'الأحد',
+        'monday' => 'الاثنين',
+        'tuesday' => 'الثلاثاء',
+        'wednesday' => 'الأربعاء',
+        'thursday' => 'الخميس',
+        'friday' => 'الجمعة',
+        'saturday' => 'السبت',
+    ],
+    'session_statuses' => [
+        'scheduled' => 'مجدولة',
+        'completed' => 'مكتملة',
+        'cancelled' => 'ملغاة',
+        'postponed' => 'مؤجلة',
+    ],
 ];

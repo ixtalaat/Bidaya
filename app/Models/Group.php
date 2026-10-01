@@ -59,6 +59,16 @@ class Group extends Model
         return $this->enrollments()->active();
     }
 
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(GroupSchedule::class)->orderBy('day_of_week')->orderBy('start_time');
+    }
+
+    public function sessions(): HasMany
+    {
+        return $this->hasMany(Session::class)->orderBy('date')->orderBy('start_time');
+    }
+
     public function availableSeats(): int
     {
         return max(0, $this->capacity - $this->activeEnrollments()->count());

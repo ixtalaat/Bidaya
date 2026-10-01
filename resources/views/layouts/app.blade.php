@@ -19,6 +19,7 @@
             </a>
             @auth
                 <a href="{{ route('dashboard') }}" class="text-slate-600 hover:text-indigo-700">{{ __('layout.dashboard') }}</a>
+                <a href="{{ route('sessions.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('sessions.title') }}</a>
                 @can('manage-center')
                     <a href="{{ route('courses.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('courses.title') }}</a>
                     <a href="{{ route('groups.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('groups.title') }}</a>

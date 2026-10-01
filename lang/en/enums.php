@@ -48,4 +48,19 @@ return [
         'paid' => 'Paid',
         'cancelled' => 'Cancelled',
     ],
+    'days' => [
+        'sunday' => 'Sunday',
+        'monday' => 'Monday',
+        'tuesday' => 'Tuesday',
+        'wednesday' => 'Wednesday',
+        'thursday' => 'Thursday',
+        'friday' => 'Friday',
+        'saturday' => 'Saturday',
+    ],
+    'session_statuses' => [
+        'scheduled' => 'Scheduled',
+        'completed' => 'Completed',
+        'cancelled' => 'Cancelled',
+        'postponed' => 'Postponed',
+    ],
 ];

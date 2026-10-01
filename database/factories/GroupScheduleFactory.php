@@ -1,0 +1,30 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Enums\DayOfWeek;
+use App\Models\Group;
+use App\Models\GroupSchedule;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<GroupSchedule>
+ */
+class GroupScheduleFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'group_id' => Group::factory(),
+            'day_of_week' => fake()->randomElement(DayOfWeek::cases()),
+            'start_time' => '17:00',
+            'end_time' => '18:00',
+            'classroom' => null,
+        ];
+    }
+}
