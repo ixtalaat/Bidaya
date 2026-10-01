@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AssessmentResultsController;
 use App\Http\Controllers\AssessmentsController;
+use App\Http\Controllers\AuditLogsController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\CoursesController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\GroupSchedulesController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\GuardiansController;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SessionAttendanceController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\StudentsController;
@@ -56,6 +58,11 @@ Route::middleware('auth')->group(function (): void {
         Route::resource('teachers', TeachersController::class);
         Route::resource('groups', GroupsController::class);
         Route::resource('enrollments', EnrollmentsController::class)->except(['destroy']);
+        Route::get('/reports/attendance', [ReportsController::class, 'attendance'])->name('reports.attendance');
+        Route::get('/reports/progress', [ReportsController::class, 'progress'])->name('reports.progress');
+        Route::get('/reports/courses', [ReportsController::class, 'courses'])->name('reports.courses');
+        Route::get('/audit-logs', [AuditLogsController::class, 'index'])->name('audit-logs.index');
+        Route::get('/audit-logs/{auditLog}', [AuditLogsController::class, 'show'])->name('audit-logs.show');
         Route::resource('groups.schedules', GroupSchedulesController::class)->except(['create', 'show'])->scoped();
 
         Route::get('/sessions/create', [SessionsController::class, 'create'])->name('sessions.create');
@@ -80,5 +87,6 @@ Route::middleware('auth')->group(function (): void {
     Route::middleware('role:super_admin,manager,accountant')->group(function (): void {
         Route::resource('payments', PaymentsController::class)->only(['index', 'create', 'store', 'show']);
         Route::post('/payments/{payment}/refund', [PaymentsController::class, 'refund'])->name('payments.refund');
+        Route::get('/reports/financial', [ReportsController::class, 'financial'])->name('reports.financial');
     });
 });

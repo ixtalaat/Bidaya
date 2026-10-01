@@ -27,9 +27,14 @@
                     <a href="{{ route('teachers.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('teachers.title') }}</a>
                     <a href="{{ route('students.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('students.title') }}</a>
                     <a href="{{ route('parents.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('guardians.title') }}</a>
+                    <a href="{{ route('reports.attendance') }}" class="text-slate-600 hover:text-indigo-700">{{ __('reports.attendance_title') }}</a>
+                    <a href="{{ route('reports.progress') }}" class="text-slate-600 hover:text-indigo-700">{{ __('reports.progress_title') }}</a>
+                    <a href="{{ route('reports.courses') }}" class="text-slate-600 hover:text-indigo-700">{{ __('reports.courses_title') }}</a>
+                    <a href="{{ route('audit-logs.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('reports.audit_title') }}</a>
                 @endcan
                 @can('record-payments')
                     <a href="{{ route('payments.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('payments.title') }}</a>
+                    <a href="{{ route('reports.financial') }}" class="text-slate-600 hover:text-indigo-700">{{ __('reports.financial_title') }}</a>
                 @endcan
                 <span class="text-slate-400">{{ auth()->user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}" class="inline">
