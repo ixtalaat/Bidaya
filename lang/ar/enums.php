@@ -100,4 +100,9 @@ return [
         'late' => 'متأخر',
         'reviewed' => 'تم التصحيح',
     ],
+    'whatsapp_message_statuses' => [
+        'sent' => 'تم الإرسال',
+        'failed' => 'فشل',
+        'skipped' => 'تم التخطي',
+    ],
 ];

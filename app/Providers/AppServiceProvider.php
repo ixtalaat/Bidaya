@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Contracts\WhatsAppGateway;
 use App\Enums\Role;
 use App\Models\User;
+use App\Services\MetaWhatsAppGateway;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
@@ -16,7 +18,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(WhatsAppGateway::class, fn (): MetaWhatsAppGateway => new MetaWhatsAppGateway(
+            (string) config('services.whatsapp.phone_number_id'),
+            (string) config('services.whatsapp.token'),
+            (bool) config('services.whatsapp.enabled'),
+        ));
     }
 
     /**

@@ -40,4 +40,10 @@ return [
         'admin_password' => env('ADMIN_PASSWORD', 'password'),
     ],
 
+    'whatsapp' => [
+        'enabled' => env('WHATSAPP_ENABLED', false),
+        'phone_number_id' => env('WHATSAPP_PHONE_NUMBER_ID'),
+        'token' => env('WHATSAPP_TOKEN'),
+    ],
+
 ];

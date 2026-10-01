@@ -100,4 +100,9 @@ return [
         'late' => 'Late',
         'reviewed' => 'Reviewed',
     ],
+    'whatsapp_message_statuses' => [
+        'sent' => 'Sent',
+        'failed' => 'Failed',
+        'skipped' => 'Skipped',
+    ],
 ];
