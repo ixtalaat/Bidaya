@@ -8,4 +8,73 @@
 @theme {
     --font-sans: 'Cairo', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Marhey', 'Cairo', ui-sans-serif, system-ui, sans-serif;
+
+    --color-primary: #2563eb;
+    --color-on-primary: #ffffff;
+    --color-secondary: #f59e0b;
+    --color-on-secondary: #0f172a;
+    --color-accent: #ec4899;
+    --color-background: #eff6ff;
+    --color-foreground: #0f172a;
+    --color-card: #ffffff;
+    --color-muted: #f1f5fd;
+    --color-muted-foreground: #475569;
+    --color-border: #e4ecfc;
+}
+
+.clay-card {
+    background: var(--color-card);
+    border: 3px solid var(--color-foreground);
+    border-radius: 1.5rem;
+    box-shadow: 6px 6px 0 var(--color-foreground);
+}
+
+.clay-chip {
+    border: 2px solid var(--color-foreground);
+    border-radius: 9999px;
+    box-shadow: 3px 3px 0 var(--color-foreground);
+}
+
+@keyframes bidaya-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes bidaya-rise {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.animate-float {
+    animation: bidaya-float 5s ease-in-out infinite;
+}
+
+.reveal {
+    opacity: 0;
+}
+
+.reveal.is-visible {
+    animation: bidaya-rise 0.45s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-float,
+    .reveal,
+    .reveal.is-visible {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
 }

@@ -21,6 +21,28 @@ function showToast(message, type = 'success') {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealTargets = document.querySelectorAll('.reveal');
+
+    if (reduceMotion || revealTargets.length === 0 || !('IntersectionObserver' in window)) {
+        revealTargets.forEach((element) => element.classList.add('is-visible'));
+    } else {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationDelay = `${Math.min(entry.target.dataset.stagger || index * 60, 480)}ms`;
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.15 }
+        );
+
+        revealTargets.forEach((element) => observer.observe(element));
+    }
+
     const flash = document.getElementById('flash-data');
 
     if (flash) {

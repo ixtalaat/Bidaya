@@ -9,6 +9,9 @@ return [
     'hero_subtitle' => 'Bidaya runs the full learning journey in one place: courses, groups, attendance, grades, and payments — with parents always in the picture.',
     'hero_cta_login' => 'Sign in',
     'hero_cta_contact' => 'Talk to us',
+    'chip_small_groups' => 'Small groups',
+    'chip_parent_updates' => 'Parents always updated',
+    'chip_teachers' => 'Caring teachers',
 
     'stat_courses' => 'Active courses',
     'stat_groups' => 'Active groups',
@@ -39,6 +42,15 @@ return [
     'cta_title' => 'Ready to start?',
     'cta_subtitle' => 'Visit the center or send us a message and we will help you pick the right course.',
     'cta_button' => 'Contact us',
+
+    'how_title' => 'How it works',
+    'how_subtitle' => 'Three simple steps from first visit to visible progress.',
+    'step_visit_t' => 'Visit us',
+    'step_visit_d' => 'Come to the center, meet the teachers, and pick the right course for your child’s age and level.',
+    'step_enroll_t' => 'Enroll',
+    'step_enroll_d' => 'We register your child in a small group with a fixed weekly schedule and a clear monthly fee.',
+    'step_track_t' => 'Track progress',
+    'step_track_d' => 'Follow attendance, grades, and payments from your parent account — no need to ask on WhatsApp.',
 
     'about_title' => 'About Bidaya',
     'about_subtitle' => 'Bidaya means “a beginning” — and that is exactly what we give every child.',

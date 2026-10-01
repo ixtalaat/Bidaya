@@ -21,6 +21,8 @@ class PagesTest extends TestCase
         $response->assertOk();
         $response->assertSee('English for Kids');
         $response->assertSee(__('pages.hero_title'));
+        $response->assertSee(__('pages.how_title'));
+        $response->assertSee('favicon.svg', false);
     }
 
     public function test_home_page_renders_in_arabic(): void
