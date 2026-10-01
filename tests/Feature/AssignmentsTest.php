@@ -71,8 +71,8 @@ class AssignmentsTest extends TestCase
             'group_id' => $group->id,
             'status' => EnrollmentStatus::Active,
         ]);
-        $draft = Assignment::factory()->create(['group_id' => $group->id, 'status' => AssignmentStatus::Draft]);
-        $published = Assignment::factory()->create(['group_id' => $group->id, 'status' => AssignmentStatus::Published]);
+        $draft = Assignment::factory()->create(['group_id' => $group->id, 'title' => 'Secret Draft Work', 'status' => AssignmentStatus::Draft]);
+        $published = Assignment::factory()->create(['group_id' => $group->id, 'title' => 'Public Homework Alpha', 'status' => AssignmentStatus::Published]);
 
         $index = $this->actingAs($parentUser)->get(route('groups.assignments.index', $group));
         $index->assertOk();
