@@ -3,8 +3,11 @@
 namespace Tests\Feature;
 
 use App\Enums\CourseStatus;
+use App\Enums\DayOfWeek;
 use App\Models\ContactMessage;
 use App\Models\Course;
+use App\Models\Group;
+use App\Models\GroupSchedule;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -33,6 +36,58 @@ class PagesTest extends TestCase
         $response->assertSee('dir="rtl"', false);
         $response->assertSee('بداية');
         $response->assertSee('<title>بداية', false);
+    }
+
+    public function test_catalog_lists_only_accepting_courses(): void
+    {
+        Course::factory()->create(['name' => 'Visible Course', 'status' => CourseStatus::Active]);
+        Course::factory()->create(['name' => 'Hidden Draft', 'status' => CourseStatus::Draft]);
+
+        $response = $this->get(route('catalog'));
+
+        $response->assertOk();
+        $response->assertSee('Visible Course');
+        $response->assertDontSee('Hidden Draft');
+    }
+
+    public function test_course_details_show_groups_teachers_and_schedules(): void
+    {
+        $course = Course::factory()->create([
+            'name' => 'Bidaya Collection',
+            'description' => 'All subjects in one collection.',
+            'status' => CourseStatus::Active,
+        ]);
+        $group = Group::factory()->create(['course_id' => $course->id, 'name' => 'Arabic Group']);
+        GroupSchedule::factory()->create([
+            'group_id' => $group->id,
+            'day_of_week' => DayOfWeek::Sunday,
+        ]);
+
+        $response = $this->get(route('catalog.show', $course));
+
+        $response->assertOk();
+        $response->assertSee('Bidaya Collection');
+        $response->assertSee('All subjects in one collection.');
+        $response->assertSee('Arabic Group');
+        $response->assertSee($group->teacher->user->name);
+        $response->assertSee(__('pages.details_ask'));
+    }
+
+    public function test_draft_course_details_return_not_found(): void
+    {
+        $course = Course::factory()->create(['status' => CourseStatus::Draft]);
+
+        $this->get(route('catalog.show', $course))->assertNotFound();
+    }
+
+    public function test_catalog_renders_in_arabic(): void
+    {
+        Course::factory()->create(['name' => 'Visible Course', 'status' => CourseStatus::Active]);
+
+        $response = $this->withSession(['locale' => 'ar'])->get(route('catalog'));
+
+        $response->assertOk();
+        $response->assertSee(__('pages.catalog_title'));
     }
 
     public function test_about_and_contact_pages_render(): void

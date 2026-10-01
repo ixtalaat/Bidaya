@@ -29,6 +29,8 @@ Route::get('/', [PagesController::class, 'home'])->name('home');
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::post('/contact', [PagesController::class, 'sendContact'])->middleware('throttle:5,1')->name('contact.send');
+Route::get('/catalog', [PagesController::class, 'courses'])->name('catalog');
+Route::get('/catalog/{course}', [PagesController::class, 'courseDetails'])->name('catalog.show');
 
 Route::get('/lang/{locale}', function (string $locale) {
     if (in_array($locale, SetLocale::SUPPORTED_LOCALES, true)) {

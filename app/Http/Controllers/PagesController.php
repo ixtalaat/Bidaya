@@ -44,6 +44,29 @@ class PagesController extends Controller
         return view('pages.contact');
     }
 
+    public function courses(): View
+    {
+        return view('pages.courses', [
+            'courses' => Course::whereIn('status', [CourseStatus::Published, CourseStatus::Active])
+                ->withCount('groups')
+                ->orderBy('name')
+                ->get(),
+        ]);
+    }
+
+    public function courseDetails(Course $course): View
+    {
+        abort_unless($course->status->acceptsEnrollments(), 404);
+
+        $course->load([
+            'groups' => fn ($query) => $query->where('status', GroupStatus::Active)->orderBy('name'),
+            'groups.teacher.user',
+            'groups.schedules',
+        ]);
+
+        return view('pages.course-details', ['course' => $course]);
+    }
+
     public function sendContact(StoreContactRequest $request): RedirectResponse
     {
         ContactMessage::create($request->validated());

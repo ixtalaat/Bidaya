@@ -82,8 +82,8 @@
                 <h3 class="mt-3 font-display text-lg font-bold text-slate-900">{{ $course->name }}</h3>
                 <p class="mt-2 text-sm font-extrabold text-primary">{{ number_format($course->monthly_fee, 2) }} {{ __('pages.per_month') }}</p>
                 <p class="mt-1 text-xs font-semibold text-slate-500">{{ __('pages.groups_open', ['count' => $course->groups_count]) }}</p>
-                <a href="{{ route('contact') }}" class="mt-4 inline-block cursor-pointer rounded-xl border-2 border-slate-900 bg-white px-4 py-2 text-center text-sm font-bold text-slate-900 transition-colors hover:bg-slate-900 hover:text-white">
-                    {{ __('pages.cta_button') }}
+                <a href="{{ route('catalog.show', $course) }}" class="mt-4 inline-block cursor-pointer rounded-xl border-2 border-slate-900 bg-white px-4 py-2 text-center text-sm font-bold text-slate-900 transition-colors hover:bg-slate-900 hover:text-white">
+                    {{ __('pages.view_details') }}
                 </a>
             </div>
         @empty

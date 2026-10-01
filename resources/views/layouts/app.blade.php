@@ -18,6 +18,7 @@
         <nav class="hidden items-center gap-1 text-sm lg:flex" aria-label="Primary">
             @guest
                 <x-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('layout.home') }}</x-nav-link>
+                <x-nav-link :href="route('catalog')" :active="request()->routeIs('catalog*')">{{ __('pages.courses_nav') }}</x-nav-link>
                 <x-nav-link :href="route('about')" :active="request()->routeIs('about')">{{ __('pages.about_nav') }}</x-nav-link>
                 <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">{{ __('pages.contact_nav') }}</x-nav-link>
             @endguest
@@ -120,6 +121,7 @@
     <div id="mobile-nav" class="hidden border-t-2 border-slate-900 bg-white lg:hidden">
         <nav class="mx-auto max-w-6xl space-y-1 px-4 py-4 text-sm" aria-label="Mobile">
             <x-nav-link dropdownItem :href="route('home')" :active="request()->routeIs('home')">{{ __('layout.home') }}</x-nav-link>
+            <x-nav-link dropdownItem :href="route('catalog')" :active="request()->routeIs('catalog*')">{{ __('pages.courses_nav') }}</x-nav-link>
             <x-nav-link dropdownItem :href="route('about')" :active="request()->routeIs('about')">{{ __('pages.about_nav') }}</x-nav-link>
             <x-nav-link dropdownItem :href="route('contact')" :active="request()->routeIs('contact')">{{ __('pages.contact_nav') }}</x-nav-link>
             @auth
@@ -180,6 +182,7 @@
             <h2 class="font-display font-bold text-slate-900">{{ __('layout.explore') }}</h2>
             <ul class="mt-3 space-y-2 text-sm">
                 <li><a href="{{ route('home') }}" class="font-semibold text-slate-600 hover:text-primary">{{ __('layout.home') }}</a></li>
+                <li><a href="{{ route('catalog') }}" class="font-semibold text-slate-600 hover:text-primary">{{ __('pages.courses_nav') }}</a></li>
                 <li><a href="{{ route('about') }}" class="font-semibold text-slate-600 hover:text-primary">{{ __('pages.about_nav') }}</a></li>
                 <li><a href="{{ route('contact') }}" class="font-semibold text-slate-600 hover:text-primary">{{ __('pages.contact_nav') }}</a></li>
             </ul>
