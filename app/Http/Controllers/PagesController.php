@@ -7,13 +7,17 @@ use App\Enums\GroupStatus;
 use App\Enums\StudentStatus;
 use App\Enums\TeacherStatus;
 use App\Http\Requests\StoreContactRequest;
+use App\Mail\ContactMessageReceived;
 use App\Models\ContactMessage;
 use App\Models\Course;
 use App\Models\Group;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use Throwable;
 
 class PagesController extends Controller
 {
@@ -69,7 +73,13 @@ class PagesController extends Controller
 
     public function sendContact(StoreContactRequest $request): RedirectResponse
     {
-        ContactMessage::create($request->validated());
+        $message = ContactMessage::create($request->validated());
+
+        try {
+            Mail::to(config('services.bidaya.contact_email'))->send(new ContactMessageReceived($message));
+        } catch (Throwable $exception) {
+            Log::warning('Contact email failed to send.', ['error' => $exception->getMessage()]);
+        }
 
         return redirect()->route('contact')->with('status', __('pages.message_sent'));
     }

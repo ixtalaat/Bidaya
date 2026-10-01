@@ -7,6 +7,7 @@ use App\Http\Controllers\AssignmentsController;
 use App\Http\Controllers\AuditLogsController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\ContactMessagesController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnrollmentsController;
@@ -64,6 +65,7 @@ Route::middleware('auth')->group(function (): void {
     Route::middleware('role:super_admin,manager')->group(function (): void {
         Route::resource('parents', GuardiansController::class)->parameters(['parents' => 'guardian']);
         Route::resource('students', StudentsController::class);
+        Route::resource('contact-messages', ContactMessagesController::class)->only(['index', 'show', 'destroy']);
         Route::resource('courses', CoursesController::class);
         Route::resource('teachers', TeachersController::class);
         Route::resource('groups', GroupsController::class);

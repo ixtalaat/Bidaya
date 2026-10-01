@@ -58,6 +58,7 @@
                             <x-nav-link dropdownItem :href="route('teachers.index')" :active="request()->routeIs('teachers.*')">{{ __('teachers.title') }}</x-nav-link>
                             <x-nav-link dropdownItem :href="route('students.index')" :active="request()->routeIs('students.*')">{{ __('students.title') }}</x-nav-link>
                             <x-nav-link dropdownItem :href="route('parents.index')" :active="request()->routeIs('parents.*')">{{ __('guardians.title') }}</x-nav-link>
+                            <x-nav-link dropdownItem :href="route('contact-messages.index')" :active="request()->routeIs('contact-messages.*')">{{ __('pages.inbox_title') }}</x-nav-link>
                         </div>
                     </div>
                     <div class="relative">
@@ -147,6 +148,7 @@
                     <x-nav-link dropdownItem :href="route('teachers.index')" :active="request()->routeIs('teachers.*')">{{ __('teachers.title') }}</x-nav-link>
                     <x-nav-link dropdownItem :href="route('students.index')" :active="request()->routeIs('students.*')">{{ __('students.title') }}</x-nav-link>
                     <x-nav-link dropdownItem :href="route('parents.index')" :active="request()->routeIs('parents.*')">{{ __('guardians.title') }}</x-nav-link>
+                    <x-nav-link dropdownItem :href="route('contact-messages.index')" :active="request()->routeIs('contact-messages.*')">{{ __('pages.inbox_title') }}</x-nav-link>
                     <p class="px-3 pb-1 pt-3 text-xs font-extrabold uppercase tracking-wide text-slate-400">{{ __('layout.reports') }}</p>
                     <x-nav-link dropdownItem :href="route('reports.attendance')" :active="request()->routeIs('reports.attendance')">{{ __('reports.attendance_title') }}</x-nav-link>
                     <x-nav-link dropdownItem :href="route('reports.progress')" :active="request()->routeIs('reports.progress')">{{ __('reports.progress_title') }}</x-nav-link>
