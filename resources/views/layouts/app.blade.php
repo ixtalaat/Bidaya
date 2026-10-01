@@ -20,6 +20,12 @@
             @auth
                 <a href="{{ route('dashboard') }}" class="text-slate-600 hover:text-indigo-700">{{ __('layout.dashboard') }}</a>
                 <a href="{{ route('sessions.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('sessions.title') }}</a>
+                <a href="{{ route('notifications.index') }}" class="text-slate-600 hover:text-indigo-700">
+                    {{ __('notifications.title') }}
+                    @if (($unreadNotificationsCount ?? 0) > 0)
+                        <span class="rounded-full bg-red-600 px-1.5 text-xs font-bold text-white">{{ $unreadNotificationsCount }}</span>
+                    @endif
+                </a>
                 @can('manage-center')
                     <a href="{{ route('courses.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('courses.title') }}</a>
                     <a href="{{ route('groups.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('groups.title') }}</a>

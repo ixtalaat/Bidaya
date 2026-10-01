@@ -6,9 +6,12 @@ use App\Enums\EnrollmentStatus;
 use App\Enums\InvoiceStatus;
 use App\Models\Enrollment;
 use App\Models\Group;
+use App\Models\Guardian;
 use App\Models\Student;
+use App\Notifications\StudentEnrolled;
 use App\Services\AuditLogger;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 
 class EnrollStudentAction
@@ -96,6 +99,13 @@ class EnrollStudentAction
             ]);
 
             $this->audit->log(auth()->user(), 'enrollment.created', $enrollment, [], $enrollment->toArray());
+
+            $enrollment->load(['student', 'group.course']);
+
+            Notification::send(
+                Guardian::notifiableUsersForStudent($enrollment->student),
+                new StudentEnrolled($enrollment)
+            );
 
             return $enrollment;
         });

@@ -11,6 +11,7 @@ use App\Http\Controllers\EnrollmentsController;
 use App\Http\Controllers\GroupSchedulesController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\GuardiansController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SessionAttendanceController;
@@ -79,6 +80,10 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/sessions/{session}/status', [SessionsController::class, 'updateStatus'])->name('sessions.status');
     Route::get('/sessions/{session}/attendance', [SessionAttendanceController::class, 'edit'])->name('sessions.attendance.edit');
     Route::put('/sessions/{session}/attendance', [SessionAttendanceController::class, 'update'])->name('sessions.attendance.update');
+
+    Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [NotificationsController::class, 'read'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationsController::class, 'readAll'])->name('notifications.read-all');
 
     Route::resource('groups.assessments', AssessmentsController::class)->scoped();
     Route::get('/groups/{group}/assessments/{assessment}/results', [AssessmentResultsController::class, 'edit'])->name('groups.assessments.results.edit')->scopeBindings();

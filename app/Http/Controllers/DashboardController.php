@@ -6,7 +6,6 @@ use App\Enums\AttendanceStatus;
 use App\Enums\CourseStatus;
 use App\Enums\GroupStatus;
 use App\Enums\InvoiceStatus;
-use App\Enums\PaymentStatus;
 use App\Enums\Role;
 use App\Enums\StudentStatus;
 use App\Enums\TeacherStatus;
@@ -21,12 +20,15 @@ use App\Models\Session;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Services\FinanceMetrics;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
+    public function __construct(private FinanceMetrics $finance) {}
+
     public function index(Request $request): View
     {
         $user = $request->user();
@@ -248,17 +250,11 @@ class DashboardController extends Controller
 
     private function outstandingTotal(): float
     {
-        $invoiced = (float) Invoice::where('status', '!=', InvoiceStatus::Cancelled)->sum('total');
-        $collected = (float) Payment::where('status', PaymentStatus::Completed)->sum('amount');
-
-        return max(0, round($invoiced - $collected, 2));
+        return $this->finance->outstandingTotal();
     }
 
     private function collectedBetween(string $from, string $to): float
     {
-        return round((float) Payment::where('status', PaymentStatus::Completed)
-            ->whereDate('payment_date', '>=', $from)
-            ->whereDate('payment_date', '<=', $to)
-            ->sum('amount'), 2);
+        return $this->finance->collectedBetween($from, $to);
     }
 }

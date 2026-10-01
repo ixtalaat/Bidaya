@@ -4,11 +4,14 @@ namespace App\Actions\Payments;
 
 use App\Enums\InvoiceStatus;
 use App\Enums\PaymentStatus;
+use App\Models\Guardian;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\User;
+use App\Notifications\PaymentRecorded;
 use App\Services\AuditLogger;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 
 class RecordPaymentAction
@@ -61,6 +64,13 @@ class RecordPaymentAction
             $invoice->refreshStatus();
 
             $this->audit->log($receiver, 'payment.recorded', $payment, [], $payment->toArray());
+
+            $payment->load('invoice.enrollment.student');
+
+            Notification::send(
+                Guardian::notifiableUsersForStudent($payment->invoice->enrollment->student),
+                new PaymentRecorded($payment)
+            );
 
             return $payment;
         });

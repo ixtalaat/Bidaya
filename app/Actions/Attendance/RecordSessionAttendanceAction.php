@@ -2,10 +2,15 @@
 
 namespace App\Actions\Attendance;
 
+use App\Enums\AttendanceStatus;
 use App\Enums\SessionStatus;
 use App\Models\Attendance;
+use App\Models\Enrollment;
+use App\Models\Guardian;
 use App\Models\Session;
+use App\Notifications\StudentAbsent;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 
 class RecordSessionAttendanceAction
@@ -58,6 +63,35 @@ class RecordSessionAttendanceAction
 
         Attendance::upsert($rows, ['session_id', 'enrollment_id'], ['status', 'recorded_by', 'updated_at']);
 
+        $this->notifyAbsentGuardians($session, $records);
+
         return count($rows);
+    }
+
+    /**
+     * @param  array<int, array{enrollment_id: int|string, status: string}>  $records
+     */
+    private function notifyAbsentGuardians(Session $session, array $records): void
+    {
+        $absentEnrollmentIds = collect($records)
+            ->where('status', AttendanceStatus::Absent->value)
+            ->pluck('enrollment_id')
+            ->map(fn ($id): int => (int) $id)
+            ->all();
+
+        if ($absentEnrollmentIds === []) {
+            return;
+        }
+
+        $session->load('group');
+
+        $absentEnrollments = Enrollment::whereIn('id', $absentEnrollmentIds)->with('student')->get();
+
+        foreach ($absentEnrollments as $enrollment) {
+            Notification::send(
+                Guardian::notifiableUsersForStudent($enrollment->student),
+                new StudentAbsent($session, $enrollment->student->name)
+            );
+        }
     }
 }

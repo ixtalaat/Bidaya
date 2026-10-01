@@ -6,6 +6,7 @@ use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,5 +28,9 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('manage-center', fn (User $user): bool => $user->hasRole(Role::SuperAdmin, Role::Manager));
         Gate::define('record-payments', fn (User $user): bool => $user->hasRole(Role::SuperAdmin, Role::Manager, Role::Accountant));
+
+        View::composer('layouts.app', function ($view): void {
+            $view->with('unreadNotificationsCount', auth()->user()?->unreadNotifications()->count() ?? 0);
+        });
     }
 }
