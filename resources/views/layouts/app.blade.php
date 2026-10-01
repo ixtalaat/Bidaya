@@ -16,12 +16,16 @@
     <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
         <x-logo />
         <nav class="hidden items-center gap-1 text-sm lg:flex" aria-label="Primary">
-            <x-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('layout.home') }}</x-nav-link>
-            <x-nav-link :href="route('about')" :active="request()->routeIs('about')">{{ __('pages.about_nav') }}</x-nav-link>
-            <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">{{ __('pages.contact_nav') }}</x-nav-link>
+            @guest
+                <x-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('layout.home') }}</x-nav-link>
+                <x-nav-link :href="route('about')" :active="request()->routeIs('about')">{{ __('pages.about_nav') }}</x-nav-link>
+                <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">{{ __('pages.contact_nav') }}</x-nav-link>
+            @endguest
             @auth
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">{{ __('layout.dashboard') }}</x-nav-link>
-                <x-nav-link :href="route('sessions.index')" :active="request()->routeIs('sessions.*')">{{ __('sessions.title') }}</x-nav-link>
+                @if (auth()->user()->hasRole(\App\Enums\Role::SuperAdmin, \App\Enums\Role::Manager, \App\Enums\Role::Teacher))
+                    <x-nav-link :href="route('sessions.index')" :active="request()->routeIs('sessions.*')">{{ __('sessions.title') }}</x-nav-link>
+                @endif
                 @can('manage-center')
                     <div class="relative">
                         <button type="button" data-dropdown-toggle="menu-quick-add" aria-expanded="false" aria-haspopup="true"
@@ -120,7 +124,9 @@
             <x-nav-link dropdownItem :href="route('contact')" :active="request()->routeIs('contact')">{{ __('pages.contact_nav') }}</x-nav-link>
             @auth
                 <x-nav-link dropdownItem :href="route('dashboard')" :active="request()->routeIs('dashboard')">{{ __('layout.dashboard') }}</x-nav-link>
-                <x-nav-link dropdownItem :href="route('sessions.index')" :active="request()->routeIs('sessions.*')">{{ __('sessions.title') }}</x-nav-link>
+                @if (auth()->user()->hasRole(\App\Enums\Role::SuperAdmin, \App\Enums\Role::Manager, \App\Enums\Role::Teacher))
+                    <x-nav-link dropdownItem :href="route('sessions.index')" :active="request()->routeIs('sessions.*')">{{ __('sessions.title') }}</x-nav-link>
+                @endif
                 <x-nav-link dropdownItem :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">{{ __('notifications.title') }}</x-nav-link>
                 @can('manage-center')
                     <p class="px-3 pb-1 pt-3 text-xs font-extrabold uppercase tracking-wide text-slate-400">{{ __('layout.quick_create') }}</p>

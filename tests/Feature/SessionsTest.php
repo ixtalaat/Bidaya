@@ -259,4 +259,15 @@ class SessionsTest extends TestCase
         $response->assertSessionHasErrors('session');
         $this->assertDatabaseHas('class_sessions', ['id' => $session->id]);
     }
+
+    public function test_parents_and_accountants_cannot_list_sessions(): void
+    {
+        $parent = User::factory()->withRole(Role::Parent)->create();
+        $accountant = User::factory()->withRole(Role::Accountant)->create();
+        $studentUser = User::factory()->withRole(Role::Student)->create();
+
+        $this->actingAs($parent)->get(route('sessions.index'))->assertForbidden();
+        $this->actingAs($accountant)->get(route('sessions.index'))->assertForbidden();
+        $this->actingAs($studentUser)->get(route('sessions.index'))->assertForbidden();
+    }
 }

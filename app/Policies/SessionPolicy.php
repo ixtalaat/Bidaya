@@ -13,7 +13,7 @@ class SessionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasRole(Role::SuperAdmin, Role::Manager, Role::Teacher);
     }
 
     /**

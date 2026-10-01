@@ -27,6 +27,8 @@ class SessionsController extends Controller
      */
     public function index(Request $request): View
     {
+        Gate::authorize('viewAny', Session::class);
+
         $status = SessionStatus::tryFrom($request->string('status')->toString());
 
         $sessions = Session::query()
