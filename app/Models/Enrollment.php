@@ -26,6 +26,7 @@ class Enrollment extends Model
         'monthly_fee',
         'discount_amount',
         'status',
+        'covered_by_enrollment_id',
     ];
 
     /**
@@ -53,6 +54,11 @@ class Enrollment extends Model
     public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public function coveringEnrollment(): BelongsTo
+    {
+        return $this->belongsTo(Enrollment::class, 'covered_by_enrollment_id');
     }
 
     public function invoices(): HasMany

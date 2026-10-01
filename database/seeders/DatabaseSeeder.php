@@ -120,14 +120,16 @@ class DatabaseSeeder extends Seeder
             ['day_of_week' => DayOfWeek::Tuesday, 'start_time' => '17:00', 'end_time' => '18:00'],
         ]);
 
-        $foundation->groups()->create([
+        $mathGroup = $foundation->groups()->create([
             'teacher_id' => $mathTeacher->id,
             'name' => 'مجموعة الحساب',
             'capacity' => 15,
             'classroom' => 'Room 2',
             'start_date' => today()->subMonth()->toDateString(),
             'status' => GroupStatus::Active,
-        ])->schedules()->createMany([
+        ]);
+
+        $mathGroup->schedules()->createMany([
             ['day_of_week' => DayOfWeek::Monday, 'start_time' => '17:00', 'end_time' => '18:00'],
             ['day_of_week' => DayOfWeek::Wednesday, 'start_time' => '17:00', 'end_time' => '18:00'],
         ]);
@@ -176,6 +178,14 @@ class DatabaseSeeder extends Seeder
             'payment_date' => today()->subWeek()->toDateString(),
             'method' => PaymentMethod::Cash->value,
         ], $accountant);
+
+        app(EnrollStudentAction::class)->handle([
+            'student_id' => $student->id,
+            'group_id' => $mathGroup->id,
+            'enrollment_date' => today()->subWeeks(2)->toDateString(),
+            'start_date' => today()->subWeeks(2)->toDateString(),
+            'discount_amount' => 0,
+        ]);
 
         $session = $group->sessions()->create([
             'teacher_id' => $arabicTeacher->id,

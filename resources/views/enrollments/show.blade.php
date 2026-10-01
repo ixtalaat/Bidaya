@@ -44,6 +44,11 @@
     </dl>
 
     <h2 class="mb-2 mt-6 font-bold">{{ __('enrollments.invoices') }}</h2>
+    @if ($enrollment->invoices->isEmpty() && $enrollment->coveringEnrollment !== null)
+        <p class="mb-3 rounded-xl border-2 border-slate-900 bg-muted px-4 py-2 text-sm">
+            {!! __('enrollments.covered_note', ['url' => route('enrollments.show', $enrollment->coveringEnrollment), 'id' => $enrollment->coveringEnrollment->id]) !!}
+        </p>
+    @endif
     <div class="overflow-hidden rounded border border-slate-200">
         <table class="w-full text-sm">
             <thead class="bg-background">

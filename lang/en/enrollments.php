@@ -39,4 +39,5 @@ return [
     'group_full' => 'This group has reached its capacity.',
     'discount_exceeds_fee' => 'The discount cannot exceed the monthly fee.',
     'invalid_transition' => 'This status change is not allowed.',
+    'covered_note' => 'Covered by the collection invoice of <a href=":url" class="font-semibold text-primary hover:underline">enrollment #:id</a>.',
 ];

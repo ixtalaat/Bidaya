@@ -39,4 +39,5 @@ return [
     'group_full' => 'وصلت هذه المجموعة إلى سعتها القصوى.',
     'discount_exceeds_fee' => 'لا يمكن أن يتجاوز الخصم المصروفات الشهرية.',
     'invalid_transition' => 'تغيير الحالة هذا غير مسموح.',
+    'covered_note' => 'مغطى بفاتورة المجموعة الخاصة بـ <a href=":url" class="font-semibold text-primary hover:underline">التسجيل رقم :id</a>.',
 ];

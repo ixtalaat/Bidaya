@@ -27,7 +27,7 @@ class EnrollStudentAction
     public function handle(array $validated): Enrollment
     {
         return DB::transaction(function () use ($validated): Enrollment {
-            $student = Student::findOrFail($validated['student_id']);
+            $student = Student::lockForUpdate()->findOrFail($validated['student_id']);
             $group = Group::lockForUpdate()->with(['course', 'teacher'])->findOrFail($validated['group_id']);
 
             if (! $student->isEnrollable()) {
@@ -75,6 +75,13 @@ class EnrollStudentAction
                 ]);
             }
 
+            $coveringEnrollment = Enrollment::where('student_id', $student->id)
+                ->active()
+                ->whereHas('group', fn ($query) => $query->where('course_id', $group->course_id))
+                ->whereHas('invoices', fn ($query) => $query->where('status', '!=', InvoiceStatus::Cancelled))
+                ->orderBy('id')
+                ->first();
+
             $enrollment = Enrollment::create([
                 'student_id' => $student->id,
                 'group_id' => $group->id,
@@ -84,20 +91,23 @@ class EnrollStudentAction
                 'monthly_fee' => $monthlyFee,
                 'discount_amount' => $discount,
                 'status' => EnrollmentStatus::Active,
+                'covered_by_enrollment_id' => $coveringEnrollment?->id,
             ]);
 
-            $periodStart = $enrollment->start_date->copy();
-            $periodEnd = $periodStart->copy()->addMonth()->subDay();
+            if ($coveringEnrollment === null) {
+                $periodStart = $enrollment->start_date->copy();
+                $periodEnd = $periodStart->copy()->addMonth()->subDay();
 
-            $enrollment->invoices()->create([
-                'period_start' => $periodStart->toDateString(),
-                'period_end' => $periodEnd->toDateString(),
-                'amount' => $monthlyFee,
-                'discount_amount' => $discount,
-                'total' => max(0, $monthlyFee - $discount),
-                'status' => InvoiceStatus::Pending,
-                'due_date' => $periodStart->toDateString(),
-            ]);
+                $enrollment->invoices()->create([
+                    'period_start' => $periodStart->toDateString(),
+                    'period_end' => $periodEnd->toDateString(),
+                    'amount' => $monthlyFee,
+                    'discount_amount' => $discount,
+                    'total' => max(0, $monthlyFee - $discount),
+                    'status' => InvoiceStatus::Pending,
+                    'due_date' => $periodStart->toDateString(),
+                ]);
+            }
 
             $this->audit->log(auth()->user(), 'enrollment.created', $enrollment, [], $enrollment->toArray());
 
