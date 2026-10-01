@@ -8,34 +8,23 @@
     <p class="mx-auto mt-2 max-w-xl text-slate-600">{{ __('pages.contact_subtitle') }}</p>
 </div>
 
-<div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-    <div class="reveal clay-card p-4 text-center">
-        <span class="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-slate-900 bg-background">
-            <svg viewBox="0 0 24 24" class="h-6 w-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-        </span>
-        <p class="mt-2 text-sm font-semibold text-slate-700">{{ __('pages.contact_address') }}</p>
-    </div>
-    <div class="reveal clay-card p-4 text-center">
-        <span class="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-slate-900 bg-background">
-            <svg viewBox="0 0 24 24" class="h-6 w-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-        </span>
-        <p class="mt-2 text-sm font-semibold text-slate-700" dir="ltr">{{ __('pages.contact_phone') }}</p>
-    </div>
-    <div class="reveal clay-card p-4 text-center">
-        <span class="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-slate-900 bg-background">
-            <svg viewBox="0 0 24 24" class="h-6 w-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><path d="M22 6l-10 7L2 6" /></svg>
-        </span>
-        <p class="mt-2 text-sm font-semibold text-slate-700">{{ __('pages.contact_email') }}</p>
-    </div>
-    <div class="reveal clay-card p-4 text-center">
-        <span class="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-slate-900 bg-background">
-            <svg viewBox="0 0 24 24" class="h-6 w-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
-        </span>
-        <p class="mt-2 text-sm font-semibold text-slate-700">{{ __('pages.contact_hours') }}</p>
-    </div>
-</div>
-
 <div class="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
+    <div>
+        <h2 class="mb-3 text-center font-display text-xl font-bold text-slate-900">{{ __('pages.map_title') }}</h2>
+        <div class="overflow-hidden clay-card p-2">
+            <iframe title="{{ __('pages.map_title') }}"
+                    src="https://www.google.com/maps?q=Mit%20Mohsen%2C%20Mit%20Ghamr%2C%20Dakahlia%2C%20Egypt&output=embed"
+                    class="h-80 w-full rounded-3xl border-0 lg:h-[28rem]"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen></iframe>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Mit+Mohsen+Mit+Ghamr+Dakahlia+Egypt" target="_blank" rel="noopener"
+           class="clay-btn mt-4 inline-block w-full cursor-pointer bg-white px-4 py-2 text-center text-sm font-extrabold text-slate-900">
+            {{ __('pages.open_in_maps') }}
+        </a>
+    </div>
+
     <div class="clay-card p-6">
         <h2 class="mb-4 font-display text-xl font-bold text-slate-900">{{ __('pages.form_title') }}</h2>
         <form method="POST" action="{{ route('contact.send') }}" class="space-y-3">
@@ -77,22 +66,40 @@
             <button type="submit" class="clay-btn w-full cursor-pointer bg-secondary px-4 py-2 text-sm font-extrabold text-slate-900">
                 {{ __('pages.form_send') }}
             </button>
+            @if (config('services.bidaya.contact_whatsapp'))
+                <a href="https://wa.me/{{ config('services.bidaya.contact_whatsapp') }}?text={{ urlencode(__('pages.whatsapp_prefill')) }}" target="_blank" rel="noopener"
+                   class="clay-btn block w-full cursor-pointer bg-[#25d366] px-4 py-2 text-center text-sm font-extrabold text-white">
+                    {{ __('pages.whatsapp_chat') }}
+                </a>
+            @endif
         </form>
     </div>
+</div>
 
-    <div class="flex flex-col gap-5">
-        <div class="overflow-hidden clay-card flex-1 p-2">
-            <iframe title="{{ __('pages.map_title') }}"
-                    src="https://www.google.com/maps?q=Mit%20Mohsen%2C%20Mit%20Ghamr%2C%20Dakahlia%2C%20Egypt&output=embed"
-                    class="h-80 w-full rounded-3xl border-0 lg:h-full lg:min-h-80"
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    allowfullscreen></iframe>
-        </div>
-        <a href="https://www.google.com/maps/search/?api=1&query=Mit+Mohsen+Mit+Ghamr+Dakahlia+Egypt" target="_blank" rel="noopener"
-           class="clay-btn inline-block cursor-pointer bg-white px-4 py-2 text-center text-sm font-extrabold text-slate-900">
-            {{ __('pages.open_in_maps') }}
-        </a>
+<div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <a href="https://www.google.com/maps/search/?api=1&query=Mit+Mohsen+Mit+Ghamr+Dakahlia+Egypt" target="_blank" rel="noopener" class="reveal clay-card block p-4 text-center transition-transform hover:-translate-y-1">
+        <span class="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-slate-900 bg-background">
+            <svg viewBox="0 0 24 24" class="h-6 w-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+        </span>
+        <p class="mt-2 text-sm font-semibold text-slate-700">{{ __('pages.contact_address') }}</p>
+    </a>
+    <a href="tel:{{ config('services.bidaya.contact_phone') }}" class="reveal clay-card block p-4 text-center transition-transform hover:-translate-y-1">
+        <span class="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-slate-900 bg-background">
+            <svg viewBox="0 0 24 24" class="h-6 w-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+        </span>
+        <p class="mt-2 text-sm font-semibold text-slate-700" dir="ltr">{{ config('services.bidaya.contact_phone') }}</p>
+    </a>
+    <a href="mailto:{{ config('services.bidaya.contact_email') }}" class="reveal clay-card block p-4 text-center transition-transform hover:-translate-y-1">
+        <span class="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-slate-900 bg-background">
+            <svg viewBox="0 0 24 24" class="h-6 w-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><path d="M22 6l-10 7L2 6" /></svg>
+        </span>
+        <p class="mt-2 break-all text-sm font-semibold text-slate-700">{{ config('services.bidaya.contact_email') }}</p>
+    </a>
+    <div class="reveal clay-card p-4 text-center">
+        <span class="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-slate-900 bg-background">
+            <svg viewBox="0 0 24 24" class="h-6 w-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
+        </span>
+        <p class="mt-2 text-sm font-semibold text-slate-700">{{ __('pages.contact_hours') }}</p>
     </div>
 </div>
 

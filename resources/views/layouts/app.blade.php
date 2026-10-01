@@ -201,8 +201,12 @@
             <h2 class="font-display font-bold text-slate-900">{{ __('pages.info_title') }}</h2>
             <ul class="mt-3 space-y-2 text-sm text-slate-600">
                 <li>{{ __('pages.contact_address') }}</li>
-                <li dir="ltr" class="text-end sm:text-start">{{ __('pages.contact_phone') }}</li>
-                <li>{{ __('pages.contact_email') }}</li>
+                <li dir="ltr" class="text-end sm:text-start">
+                    <a href="tel:{{ config('services.bidaya.contact_phone') }}" class="font-semibold hover:text-primary">{{ config('services.bidaya.contact_phone') }}</a>
+                </li>
+                <li>
+                    <a href="mailto:{{ config('services.bidaya.contact_email') }}" class="font-semibold hover:text-primary">{{ config('services.bidaya.contact_email') }}</a>
+                </li>
                 <li>{{ __('pages.contact_hours') }}</li>
             </ul>
         </div>
