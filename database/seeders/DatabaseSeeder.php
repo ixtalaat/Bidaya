@@ -66,14 +66,14 @@ class DatabaseSeeder extends Seeder
             'status' => TeacherStatus::Active,
         ]);
 
-        $quranTeacherUser = User::factory()->withRole(Role::Teacher)->create([
-            'name' => 'Mahmoud Hassan',
-            'email' => 'quran.teacher@bidaya.test',
+        $nurseryTeacherUser = User::factory()->withRole(Role::Teacher)->create([
+            'name' => 'Nourhan Khaled',
+            'email' => 'nursery.teacher@bidaya.test',
         ]);
 
-        $quranTeacher = Teacher::factory()->create([
-            'user_id' => $quranTeacherUser->id,
-            'specialization' => 'Quran',
+        $nurseryTeacher = Teacher::factory()->create([
+            'user_id' => $nurseryTeacherUser->id,
+            'specialization' => 'Nursery',
             'status' => TeacherStatus::Active,
         ]);
 
@@ -95,56 +95,72 @@ class DatabaseSeeder extends Seeder
 
         $guardian->students()->attach($student, ['relationship' => RelationshipType::Father->value]);
 
-        $course = Course::factory()->create([
-            'name' => 'Bidaya Collection',
-            'description' => 'One collection for all kids: Arabic, Math, and Quran. Single monthly fee of 350 EGP.',
-            'category' => 'Collection',
+        $foundation = Course::factory()->create([
+            'name' => 'دروس التأسيس',
+            'description' => 'Foundation lessons in Arabic and Math, 12 sessions per month.',
+            'category' => 'Foundation',
             'min_age' => 4,
             'max_age' => 12,
+            'sessions_count' => 12,
             'monthly_fee' => 350,
             'status' => CourseStatus::Active,
         ]);
 
-        $arabicGroup = $course->groups()->create([
+        $arabicGroup = $foundation->groups()->create([
             'teacher_id' => $arabicTeacher->id,
-            'name' => 'Arabic Group',
+            'name' => 'مجموعة العربي',
             'capacity' => 15,
             'classroom' => 'Room 1',
             'start_date' => today()->subMonth()->toDateString(),
             'status' => GroupStatus::Active,
         ]);
 
-        $mathGroup = $course->groups()->create([
+        $arabicGroup->schedules()->createMany([
+            ['day_of_week' => DayOfWeek::Sunday, 'start_time' => '17:00', 'end_time' => '18:00'],
+            ['day_of_week' => DayOfWeek::Tuesday, 'start_time' => '17:00', 'end_time' => '18:00'],
+        ]);
+
+        $foundation->groups()->create([
             'teacher_id' => $mathTeacher->id,
-            'name' => 'Math Group',
+            'name' => 'مجموعة الحساب',
             'capacity' => 15,
             'classroom' => 'Room 2',
             'start_date' => today()->subMonth()->toDateString(),
             'status' => GroupStatus::Active,
+        ])->schedules()->createMany([
+            ['day_of_week' => DayOfWeek::Monday, 'start_time' => '17:00', 'end_time' => '18:00'],
+            ['day_of_week' => DayOfWeek::Wednesday, 'start_time' => '17:00', 'end_time' => '18:00'],
         ]);
 
-        $quranGroup = $course->groups()->create([
-            'teacher_id' => $quranTeacher->id,
-            'name' => 'Quran Group',
-            'capacity' => 15,
-            'classroom' => 'Room 3',
+        $nursery = Course::factory()->create([
+            'name' => 'الحضانة',
+            'description' => 'Daily nursery: Arabic, Math, Quran and Aqeedah, Saturday to Thursday from 9:00 AM to 12:00 PM.',
+            'category' => 'Nursery',
+            'min_age' => 3,
+            'max_age' => 6,
+            'monthly_fee' => 350,
+            'status' => CourseStatus::Active,
+        ]);
+
+        $nurseryGroup = $nursery->groups()->create([
+            'teacher_id' => $nurseryTeacher->id,
+            'name' => 'فصل الحضانة الصباحي',
+            'capacity' => 20,
+            'classroom' => 'Nursery Room',
             'start_date' => today()->subMonth()->toDateString(),
             'status' => GroupStatus::Active,
         ]);
 
+        $nurseryGroup->schedules()->createMany([
+            ['day_of_week' => DayOfWeek::Saturday, 'start_time' => '09:00', 'end_time' => '12:00'],
+            ['day_of_week' => DayOfWeek::Sunday, 'start_time' => '09:00', 'end_time' => '12:00'],
+            ['day_of_week' => DayOfWeek::Monday, 'start_time' => '09:00', 'end_time' => '12:00'],
+            ['day_of_week' => DayOfWeek::Tuesday, 'start_time' => '09:00', 'end_time' => '12:00'],
+            ['day_of_week' => DayOfWeek::Wednesday, 'start_time' => '09:00', 'end_time' => '12:00'],
+            ['day_of_week' => DayOfWeek::Thursday, 'start_time' => '09:00', 'end_time' => '12:00'],
+        ]);
+
         $group = $arabicGroup;
-
-        $group->schedules()->create([
-            'day_of_week' => DayOfWeek::Sunday,
-            'start_time' => '17:00',
-            'end_time' => '18:00',
-        ]);
-
-        $group->schedules()->create([
-            'day_of_week' => DayOfWeek::Tuesday,
-            'start_time' => '17:00',
-            'end_time' => '18:00',
-        ]);
 
         $enrollment = app(EnrollStudentAction::class)->handle([
             'student_id' => $student->id,
