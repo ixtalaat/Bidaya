@@ -47,7 +47,7 @@
     </ul>
 
     <form method="POST" action="{{ route('teachers.destroy', $teacher) }}" class="mt-6"
-          onsubmit="return confirm({{ json_encode(__('teachers.delete_confirm')) }})">
+          data-confirm="{{ __('teachers.delete_confirm') }}">
         @csrf
         @method('DELETE')
         <button type="submit" class="rounded bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">

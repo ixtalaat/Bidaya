@@ -62,7 +62,7 @@
 
     @can('delete', $assessment)
         <form method="POST" action="{{ route('groups.assessments.destroy', [$group, $assessment]) }}" class="mt-6"
-              onsubmit="return confirm({{ json_encode(__('assessments.delete_confirm')) }})">
+              data-confirm="{{ __('assessments.delete_confirm') }}">
             @csrf
             @method('DELETE')
             <button type="submit" class="rounded bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">

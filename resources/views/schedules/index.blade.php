@@ -68,7 +68,7 @@
                     <td class="px-4 py-2 text-end">
                         <a href="{{ route('groups.schedules.edit', [$group, $schedule]) }}" class="text-slate-600 hover:text-indigo-700">{{ __('students.edit_button') }}</a>
                         <form method="POST" action="{{ route('groups.schedules.destroy', [$group, $schedule]) }}" class="inline ms-3"
-                              onsubmit="return confirm({{ json_encode(__('schedules.delete_confirm')) }})">
+                              data-confirm="{{ __('schedules.delete_confirm') }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-700 hover:underline">{{ __('schedules.delete_button') }}</button>

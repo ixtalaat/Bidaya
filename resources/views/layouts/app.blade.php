@@ -4,16 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Bidaya') }} — @yield('title')</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-900">
+<body class="flex min-h-screen flex-col bg-slate-50 text-slate-900">
 <header class="border-b border-slate-200 bg-white">
-    <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <a href="{{ route('home') }}" class="text-lg font-bold text-indigo-700">
-            {{ config('app.name', 'Bidaya') }}
-            <span class="ms-2 text-sm font-normal text-slate-500">{{ __('layout.tagline') }}</span>
-        </a>
-        <nav class="flex items-center gap-3 text-sm">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+        <x-logo :tagline="true" />
+        <nav class="flex flex-wrap items-center gap-3 text-sm">
+            <a href="{{ route('home') }}" class="text-slate-600 hover:text-indigo-700">{{ __('layout.home') }}</a>
+            <a href="{{ route('about') }}" class="text-slate-600 hover:text-indigo-700">{{ __('pages.about_nav') }}</a>
+            <a href="{{ route('contact') }}" class="text-slate-600 hover:text-indigo-700">{{ __('pages.contact_nav') }}</a>
             <a href="{{ route('locale.switch', app()->getLocale() === 'ar' ? 'en' : 'ar') }}" class="text-slate-600 hover:text-indigo-700">
                 {{ __('layout.switch_language') }}
             </a>
@@ -51,11 +54,21 @@
         </nav>
     </div>
 </header>
-<main class="mx-auto max-w-5xl px-4 py-8">
-    @if (session('status'))
-        <p class="mb-4 rounded bg-green-50 px-3 py-2 text-sm text-green-700">{{ session('status') }}</p>
-    @endif
+<main class="mx-auto w-full max-w-6xl grow px-4 py-8">
+    <div id="flash-data" class="hidden" data-success="{{ session('status') }}" data-errors='@json($errors->all())' data-confirm-button="{{ __('layout.confirm_button') }}" data-cancel-button="{{ __('layout.cancel_button') }}"></div>
     @yield('content')
 </main>
+<footer class="border-t border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-6">
+        <x-logo :tagline="true" markSize="h-8 w-8" textSize="text-lg" />
+        <nav class="flex flex-wrap items-center gap-4 text-sm text-slate-600">
+            <a href="{{ route('home') }}" class="hover:text-indigo-700">{{ __('layout.home') }}</a>
+            <a href="{{ route('about') }}" class="hover:text-indigo-700">{{ __('pages.about_nav') }}</a>
+            <a href="{{ route('contact') }}" class="hover:text-indigo-700">{{ __('pages.contact_nav') }}</a>
+            <a href="{{ route('login') }}" class="hover:text-indigo-700">{{ __('auth.login_button') }}</a>
+        </nav>
+        <p class="w-full text-center text-xs text-slate-400">{{ __('layout.footer_rights', ['year' => date('Y')]) }}</p>
+    </div>
+</footer>
 </body>
 </html>

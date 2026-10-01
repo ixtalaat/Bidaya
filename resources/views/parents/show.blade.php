@@ -38,7 +38,7 @@
     </ul>
 
     <form method="POST" action="{{ route('parents.destroy', $guardian) }}" class="mt-6"
-          onsubmit="return confirm({{ json_encode(__('guardians.delete_confirm')) }})">
+          data-confirm="{{ __('guardians.delete_confirm') }}">
         @csrf
         @method('DELETE')
         <button type="submit" class="rounded bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">

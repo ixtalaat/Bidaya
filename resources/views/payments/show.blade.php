@@ -66,7 +66,7 @@
 
     @if ($payment->status === \App\Enums\PaymentStatus::Completed)
         <form method="POST" action="{{ route('payments.refund', $payment) }}" class="mt-6 print:hidden"
-              onsubmit="return confirm({{ json_encode(__('payments.refund_confirm')) }})">
+              data-confirm="{{ __('payments.refund_confirm') }}">
             @csrf
             <button type="submit" class="rounded bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">
                 {{ __('payments.refund_button') }}
