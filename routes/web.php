@@ -12,6 +12,7 @@ use App\Http\Controllers\GroupSchedulesController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\GuardiansController;
 use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SessionAttendanceController;
@@ -21,7 +22,10 @@ use App\Http\Controllers\TeachersController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => view('welcome'))->name('home');
+Route::get('/', [PagesController::class, 'home'])->name('home');
+Route::get('/about', [PagesController::class, 'about'])->name('about');
+Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
+Route::post('/contact', [PagesController::class, 'sendContact'])->middleware('throttle:5,1')->name('contact.send');
 
 Route::get('/lang/{locale}', function (string $locale) {
     if (in_array($locale, SetLocale::SUPPORTED_LOCALES, true)) {
