@@ -21,6 +21,62 @@ function showToast(message, type = 'success') {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-dropdown-toggle]').forEach((button) => {
+        const menu = document.getElementById(button.dataset.dropdownToggle);
+
+        if (!menu || button.dataset.dropdownBound) {
+            return;
+        }
+
+        button.dataset.dropdownBound = 'true';
+
+        const close = () => {
+            menu.classList.add('hidden');
+            button.setAttribute('aria-expanded', 'false');
+        };
+
+        button.addEventListener('click', (event) => {
+            event.stopPropagation();
+
+            const willOpen = menu.classList.contains('hidden');
+
+            document.querySelectorAll('[data-dropdown-menu]').forEach((other) => other.classList.add('hidden'));
+            document.querySelectorAll('[data-dropdown-toggle]').forEach((other) => other.setAttribute('aria-expanded', 'false'));
+
+            if (willOpen) {
+                menu.classList.remove('hidden');
+                button.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!menu.contains(event.target)) {
+                close();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                close();
+            }
+        });
+    });
+
+    document.querySelectorAll('[data-mobile-toggle]').forEach((button) => {
+        const panel = document.getElementById(button.dataset.mobileToggle);
+
+        if (!panel || button.dataset.mobileBound) {
+            return;
+        }
+
+        button.dataset.mobileBound = 'true';
+
+        button.addEventListener('click', () => {
+            const willOpen = panel.classList.contains('hidden');
+            panel.classList.toggle('hidden');
+            button.setAttribute('aria-expanded', String(willOpen));
+        });
+    });
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealTargets = document.querySelectorAll('.reveal');
 
