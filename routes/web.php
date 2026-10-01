@@ -9,6 +9,7 @@ use App\Http\Controllers\EnrollmentsController;
 use App\Http\Controllers\GroupSchedulesController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\GuardiansController;
+use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\SessionAttendanceController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\StudentsController;
@@ -74,4 +75,9 @@ Route::middleware('auth')->group(function (): void {
     Route::resource('groups.assessments', AssessmentsController::class)->scoped();
     Route::get('/groups/{group}/assessments/{assessment}/results', [AssessmentResultsController::class, 'edit'])->name('groups.assessments.results.edit')->scopeBindings();
     Route::put('/groups/{group}/assessments/{assessment}/results', [AssessmentResultsController::class, 'update'])->name('groups.assessments.results.update')->scopeBindings();
+
+    Route::middleware('role:super_admin,manager,accountant')->group(function (): void {
+        Route::resource('payments', PaymentsController::class)->only(['index', 'create', 'store', 'show']);
+        Route::post('/payments/{payment}/refund', [PaymentsController::class, 'refund'])->name('payments.refund');
+    });
 });

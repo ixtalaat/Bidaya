@@ -50,7 +50,9 @@
                 <tr>
                     <th class="px-4 py-2 text-start font-medium">{{ __('enrollments.period') }}</th>
                     <th class="px-4 py-2 text-start font-medium">{{ __('enrollments.total') }}</th>
+                    <th class="px-4 py-2 text-start font-medium">{{ __('payments.remaining') }}</th>
                     <th class="px-4 py-2 text-start font-medium">{{ __('enrollments.invoice_status') }}</th>
+                    <th class="px-4 py-2"></th>
                 </tr>
             </thead>
             <tbody>
@@ -58,11 +60,19 @@
                     <tr class="border-t border-slate-100">
                         <td class="px-4 py-2">{{ $invoice->period_start->toDateString() }} → {{ $invoice->period_end->toDateString() }}</td>
                         <td class="px-4 py-2">{{ number_format($invoice->total, 2) }}</td>
+                        <td class="px-4 py-2">{{ number_format($invoice->remaining(), 2) }}</td>
                         <td class="px-4 py-2">{{ $invoice->status->label() }}</td>
+                        <td class="px-4 py-2 text-end">
+                            @can('record-payments')
+                                @if ($invoice->remaining() > 0 && $invoice->status !== \App\Enums\InvoiceStatus::Cancelled)
+                                    <a href="{{ route('payments.create', ['invoice_id' => $invoice->id]) }}" class="text-indigo-700 hover:underline">{{ __('payments.create_button') }}</a>
+                                @endif
+                            @endcan
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3" class="px-4 py-4 text-center text-slate-500">—</td>
+                        <td colspan="5" class="px-4 py-4 text-center text-slate-500">—</td>
                     </tr>
                 @endforelse
             </tbody>

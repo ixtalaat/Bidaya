@@ -78,4 +78,16 @@ return [
         'participation' => 'مشاركة',
         'project' => 'مشروع',
     ],
+    'payment_methods' => [
+        'cash' => 'نقدي',
+        'bank_transfer' => 'تحويل بنكي',
+        'card' => 'بطاقة',
+        'other' => 'أخرى',
+    ],
+    'payment_statuses' => [
+        'pending' => 'قيد الانتظار',
+        'completed' => 'مكتملة',
+        'refunded' => 'مستردة',
+        'cancelled' => 'ملغاة',
+    ],
 ];

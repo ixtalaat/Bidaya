@@ -7,11 +7,14 @@ use App\Enums\InvoiceStatus;
 use App\Models\Enrollment;
 use App\Models\Group;
 use App\Models\Student;
+use App\Services\AuditLogger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class EnrollStudentAction
 {
+    public function __construct(private AuditLogger $audit) {}
+
     /**
      * @param  array<string, mixed>  $validated
      *
@@ -91,6 +94,8 @@ class EnrollStudentAction
                 'status' => InvoiceStatus::Pending,
                 'due_date' => $periodStart->toDateString(),
             ]);
+
+            $this->audit->log(auth()->user(), 'enrollment.created', $enrollment, [], $enrollment->toArray());
 
             return $enrollment;
         });

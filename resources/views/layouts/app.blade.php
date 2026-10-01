@@ -28,6 +28,9 @@
                     <a href="{{ route('students.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('students.title') }}</a>
                     <a href="{{ route('parents.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('guardians.title') }}</a>
                 @endcan
+                @can('record-payments')
+                    <a href="{{ route('payments.index') }}" class="text-slate-600 hover:text-indigo-700">{{ __('payments.title') }}</a>
+                @endcan
                 <span class="text-slate-400">{{ auth()->user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf

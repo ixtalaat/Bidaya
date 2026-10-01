@@ -5,11 +5,14 @@ namespace App\Actions\Enrollment;
 use App\Enums\EnrollmentStatus;
 use App\Enums\InvoiceStatus;
 use App\Models\Enrollment;
+use App\Services\AuditLogger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class UpdateEnrollmentStatusAction
 {
+    public function __construct(private AuditLogger $audit) {}
+
     /**
      * @param  array<string, mixed>  $validated
      *
@@ -26,6 +29,8 @@ class UpdateEnrollmentStatusAction
         }
 
         return DB::transaction(function () use ($enrollment, $validated, $newStatus): Enrollment {
+            $previousStatus = $enrollment->status;
+
             $enrollment->update([
                 'status' => $newStatus,
                 'end_date' => $validated['end_date'] ?? $enrollment->end_date,
@@ -36,6 +41,14 @@ class UpdateEnrollmentStatusAction
                     ->where('status', InvoiceStatus::Pending)
                     ->update(['status' => InvoiceStatus::Cancelled]);
             }
+
+            $this->audit->log(
+                auth()->user(),
+                'enrollment.status_changed',
+                $enrollment,
+                ['status' => $previousStatus->value],
+                ['status' => $newStatus->value]
+            );
 
             return $enrollment->refresh();
         });

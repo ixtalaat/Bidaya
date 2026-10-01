@@ -78,4 +78,16 @@ return [
         'participation' => 'Participation',
         'project' => 'Project',
     ],
+    'payment_methods' => [
+        'cash' => 'Cash',
+        'bank_transfer' => 'Bank transfer',
+        'card' => 'Card',
+        'other' => 'Other',
+    ],
+    'payment_statuses' => [
+        'pending' => 'Pending',
+        'completed' => 'Completed',
+        'refunded' => 'Refunded',
+        'cancelled' => 'Cancelled',
+    ],
 ];
