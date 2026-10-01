@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Enums\SessionStatus;
 use App\Models\Session;
 use App\Notifications\SessionReminder;
+use App\Services\WhatsAppNotifier;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Option;
 use Illuminate\Console\Attributes\Signature;
@@ -14,6 +15,11 @@ use Illuminate\Console\Command;
 #[Description('Notify teachers about their scheduled sessions for the day')]
 class SendSessionReminders extends Command
 {
+    public function __construct(private WhatsAppNotifier $whatsapp)
+    {
+        parent::__construct();
+    }
+
     /**
      * Execute the console command.
      */
@@ -40,13 +46,22 @@ class SendSessionReminders extends Command
                 continue;
             }
 
-            $teacher->user->notify(new SessionReminder(
-                $teacherSessions->map(fn (Session $session): array => [
-                    'group' => $session->group->name,
-                    'time' => substr($session->start_time, 0, 5),
-                ])->all(),
-                $date
-            ));
+            $lines = $teacherSessions->map(fn (Session $session): array => [
+                'group' => $session->group->name,
+                'time' => substr($session->start_time, 0, 5),
+            ])->all();
+
+            $teacher->user->notify(new SessionReminder($lines, $date));
+
+            $this->whatsapp->notifyPhone(
+                $teacher->phone,
+                'session.reminder',
+                __('whatsapp.session_reminder', [
+                    'count' => count($lines),
+                    'date' => $date,
+                    'list' => collect($lines)->map(fn (array $line): string => "{$line['group']} ({$line['time']})")->join(', '),
+                ], 'ar')
+            );
 
             $notified++;
         }

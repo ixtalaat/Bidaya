@@ -39,6 +39,14 @@
 
     <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div>
+            <label for="phone" class="mb-1 block text-sm font-medium">{{ __('teachers.phone') }}</label>
+            <input id="phone" type="text" name="phone" value="{{ old('phone', $teacher->phone) }}"
+                   class="w-full rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
+            @error('phone')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+        <div>
             <label for="specialization" class="mb-1 block text-sm font-medium">{{ __('teachers.specialization') }}</label>
             <input id="specialization" type="text" name="specialization" value="{{ old('specialization', $teacher->specialization) }}"
                    class="w-full rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">

@@ -25,6 +25,7 @@ class UpdateTeacherAction
             $teacher->user->update($userData);
 
             $teacher->update([
+                'phone' => $validated['phone'] ?? null,
                 'specialization' => $validated['specialization'] ?? null,
                 'qualification' => $validated['qualification'] ?? null,
                 'hire_date' => $validated['hire_date'] ?? null,

@@ -10,13 +10,14 @@ use App\Models\Guardian;
 use App\Models\Student;
 use App\Notifications\StudentEnrolled;
 use App\Services\AuditLogger;
+use App\Services\WhatsAppNotifier;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 
 class EnrollStudentAction
 {
-    public function __construct(private AuditLogger $audit) {}
+    public function __construct(private AuditLogger $audit, private WhatsAppNotifier $whatsapp) {}
 
     /**
      * @param  array<string, mixed>  $validated
@@ -105,6 +106,16 @@ class EnrollStudentAction
             Notification::send(
                 Guardian::notifiableUsersForStudent($enrollment->student),
                 new StudentEnrolled($enrollment)
+            );
+
+            $this->whatsapp->notifyGuardians(
+                $enrollment->student,
+                'enrollment.created',
+                __('whatsapp.enrollment_created', [
+                    'student' => $enrollment->student->name,
+                    'group' => $enrollment->group->name,
+                    'fee' => number_format($enrollment->final_monthly_fee, 2),
+                ], 'ar')
             );
 
             return $enrollment;

@@ -10,6 +10,7 @@ return [
     'password' => 'كلمة المرور',
     'password_confirmation' => 'تأكيد كلمة المرور',
     'password_hint' => 'اتركها فارغة للاحتفاظ بكلمة المرور الحالية.',
+    'phone' => 'رقم الهاتف',
     'specialization' => 'التخصص',
     'qualification' => 'المؤهل',
     'hire_date' => 'تاريخ التعيين',

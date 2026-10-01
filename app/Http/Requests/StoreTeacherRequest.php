@@ -28,6 +28,7 @@ class StoreTeacherRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['nullable', 'string', 'max:32'],
             'specialization' => ['nullable', 'string', 'max:255'],
             'qualification' => ['nullable', 'string', 'max:255'],
             'hire_date' => ['nullable', 'date', 'before_or_equal:today'],

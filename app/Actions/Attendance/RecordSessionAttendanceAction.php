@@ -9,12 +9,15 @@ use App\Models\Enrollment;
 use App\Models\Guardian;
 use App\Models\Session;
 use App\Notifications\StudentAbsent;
+use App\Services\WhatsAppNotifier;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 
 class RecordSessionAttendanceAction
 {
+    public function __construct(private WhatsAppNotifier $whatsapp) {}
+
     /**
      * Record attendance for a session in a single atomic upsert.
      *
@@ -91,6 +94,16 @@ class RecordSessionAttendanceAction
             Notification::send(
                 Guardian::notifiableUsersForStudent($enrollment->student),
                 new StudentAbsent($session, $enrollment->student->name)
+            );
+
+            $this->whatsapp->notifyGuardians(
+                $enrollment->student,
+                'attendance.absent',
+                __('whatsapp.attendance_absent', [
+                    'student' => $enrollment->student->name,
+                    'group' => $session->group->name,
+                    'date' => $session->date->toDateString(),
+                ], 'ar')
             );
         }
     }

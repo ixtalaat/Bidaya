@@ -10,13 +10,14 @@ use App\Models\Payment;
 use App\Models\User;
 use App\Notifications\PaymentRecorded;
 use App\Services\AuditLogger;
+use App\Services\WhatsAppNotifier;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 
 class RecordPaymentAction
 {
-    public function __construct(private AuditLogger $audit) {}
+    public function __construct(private AuditLogger $audit, private WhatsAppNotifier $whatsapp) {}
 
     /**
      * @param  array<string, mixed>  $validated
@@ -70,6 +71,16 @@ class RecordPaymentAction
             Notification::send(
                 Guardian::notifiableUsersForStudent($payment->invoice->enrollment->student),
                 new PaymentRecorded($payment)
+            );
+
+            $this->whatsapp->notifyGuardians(
+                $payment->invoice->enrollment->student,
+                'payment.recorded',
+                __('whatsapp.payment_recorded', [
+                    'amount' => number_format($payment->amount, 2),
+                    'student' => $payment->invoice->enrollment->student->name,
+                    'remaining' => number_format($payment->invoice->remaining(), 2),
+                ], 'ar')
             );
 
             return $payment;

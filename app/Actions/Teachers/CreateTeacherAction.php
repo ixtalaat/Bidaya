@@ -23,6 +23,7 @@ class CreateTeacherAction
             ]);
 
             return $user->teacher()->create([
+                'phone' => $validated['phone'] ?? null,
                 'specialization' => $validated['specialization'] ?? null,
                 'qualification' => $validated['qualification'] ?? null,
                 'hire_date' => $validated['hire_date'] ?? null,

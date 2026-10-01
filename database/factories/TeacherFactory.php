@@ -22,6 +22,7 @@ class TeacherFactory extends Factory
     {
         return [
             'user_id' => User::factory()->withRole(Role::Teacher),
+            'phone' => fake()->phoneNumber(),
             'specialization' => fake()->randomElement(['English', 'Math', 'Science', 'Art']),
             'qualification' => fake()->sentence(3),
             'hire_date' => fake()->date(),

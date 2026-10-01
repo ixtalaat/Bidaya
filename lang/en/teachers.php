@@ -10,6 +10,7 @@ return [
     'password' => 'Password',
     'password_confirmation' => 'Confirm password',
     'password_hint' => 'Leave blank to keep the current password.',
+    'phone' => 'Phone number',
     'specialization' => 'Specialization',
     'qualification' => 'Qualification',
     'hire_date' => 'Hire date',
