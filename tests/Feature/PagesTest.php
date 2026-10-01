@@ -98,6 +98,8 @@ class PagesTest extends TestCase
         $contact->assertOk()->assertSee(__('pages.contact_title'));
         $contact->assertSee(__('pages.map_title'));
         $contact->assertSee('google.com/maps', false);
+        $contact->assertSee(__('pages.faq_title'));
+        $contact->assertSee(__('pages.faq_q1'));
     }
 
     public function test_contact_form_stores_a_message(): void
