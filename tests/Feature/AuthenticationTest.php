@@ -88,7 +88,7 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect(route('home'));
     }
 
-    public function test_logout_resets_the_locale_to_english(): void
+    public function test_logout_keeps_the_active_locale(): void
     {
         $user = User::factory()->create();
 
@@ -97,11 +97,11 @@ class AuthenticationTest extends TestCase
             ->post(route('logout'));
 
         $response->assertRedirect(route('home'));
-        $response->assertSessionHas('locale', 'en');
+        $response->assertSessionHas('locale', 'ar');
 
         $home = $this->get(route('home'));
         $home->assertOk();
-        $home->assertSee('<title>Bidaya', false);
+        $home->assertSee('<title>بداية', false);
     }
 
     public function test_guests_cannot_visit_the_dashboard(): void
