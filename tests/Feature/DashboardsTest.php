@@ -140,4 +140,27 @@ class DashboardsTest extends TestCase
         $response->assertSessionHasErrors('user_id');
         $this->assertNull($guardian->fresh()->user_id);
     }
+
+    public function test_admin_nav_shows_quick_create_and_role_badge(): void
+    {
+        $admin = User::factory()->withRole(Role::SuperAdmin)->create();
+
+        $response = $this->actingAs($admin)->get(route('dashboard'));
+
+        $response->assertOk();
+        $response->assertSee(__('layout.quick_create'));
+        $response->assertSee(route('students.create'));
+        $response->assertSee($admin->role->label());
+    }
+
+    public function test_teacher_nav_hides_quick_create(): void
+    {
+        $teacher = Teacher::factory()->create();
+
+        $response = $this->actingAs($teacher->user)->get(route('dashboard'));
+
+        $response->assertOk();
+        $response->assertDontSee(__('layout.quick_create'));
+        $response->assertSee($teacher->user->role->label());
+    }
 }

@@ -14,7 +14,7 @@
 <body class="flex min-h-screen flex-col bg-background text-slate-900">
 <header class="sticky top-0 z-40 border-b-[3px] border-slate-900 bg-white/95 backdrop-blur">
     <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
-        <x-logo :tagline="true" />
+        <x-logo />
         <nav class="hidden items-center gap-1 text-sm lg:flex" aria-label="Primary">
             <x-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('layout.home') }}</x-nav-link>
             <x-nav-link :href="route('about')" :active="request()->routeIs('about')">{{ __('pages.about_nav') }}</x-nav-link>
@@ -23,6 +23,23 @@
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">{{ __('layout.dashboard') }}</x-nav-link>
                 <x-nav-link :href="route('sessions.index')" :active="request()->routeIs('sessions.*')">{{ __('sessions.title') }}</x-nav-link>
                 @can('manage-center')
+                    <div class="relative">
+                        <button type="button" data-dropdown-toggle="menu-quick-add" aria-expanded="false" aria-haspopup="true"
+                                class="clay-btn flex cursor-pointer items-center gap-1 bg-secondary px-3 py-1.5 text-sm font-extrabold text-slate-900">
+                            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14 M5 12h14" /></svg>
+                            {{ __('layout.quick_create') }}
+                        </button>
+                        <div id="menu-quick-add" data-dropdown-menu class="clay-card absolute start-0 top-full z-50 mt-2 hidden w-56 p-2">
+                            <x-nav-link dropdownItem :href="route('students.create')">{{ __('students.create_title') }}</x-nav-link>
+                            <x-nav-link dropdownItem :href="route('parents.create')">{{ __('guardians.create_title') }}</x-nav-link>
+                            <x-nav-link dropdownItem :href="route('courses.create')">{{ __('courses.create_title') }}</x-nav-link>
+                            <x-nav-link dropdownItem :href="route('groups.create')">{{ __('groups.create_title') }}</x-nav-link>
+                            <x-nav-link dropdownItem :href="route('teachers.create')">{{ __('teachers.create_title') }}</x-nav-link>
+                            <x-nav-link dropdownItem :href="route('enrollments.create')">{{ __('enrollments.create_title') }}</x-nav-link>
+                            <x-nav-link dropdownItem :href="route('sessions.create')">{{ __('sessions.create_title') }}</x-nav-link>
+                            <x-nav-link dropdownItem :href="route('payments.create')">{{ __('payments.create_title') }}</x-nav-link>
+                        </div>
+                    </div>
                     <div class="relative">
                         <button type="button" data-dropdown-toggle="menu-manage" aria-expanded="false" aria-haspopup="true"
                                 class="flex cursor-pointer items-center gap-1 rounded-lg px-2.5 py-2 font-semibold text-slate-600 transition-colors hover:bg-muted hover:text-primary {{ request()->routeIs('courses.*', 'groups.*', 'enrollments.*', 'teachers.*', 'students.*', 'parents.*') ? 'bg-muted font-extrabold text-primary' : '' }}">
@@ -81,6 +98,7 @@
                 <span class="hidden items-center gap-2 lg:flex">
                     <span class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-slate-900 bg-secondary font-display text-sm font-bold text-slate-900" aria-hidden="true">{{ mb_substr(auth()->user()->name, 0, 1) }}</span>
                     <span class="max-w-28 truncate text-sm font-semibold text-slate-600">{{ auth()->user()->name }}</span>
+                    <span class="clay-chip bg-slate-900 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-white">{{ auth()->user()->role->label() }}</span>
                 </span>
                 <form method="POST" action="{{ route('logout') }}" class="hidden lg:inline">
                     @csrf
@@ -105,6 +123,15 @@
                 <x-nav-link dropdownItem :href="route('sessions.index')" :active="request()->routeIs('sessions.*')">{{ __('sessions.title') }}</x-nav-link>
                 <x-nav-link dropdownItem :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">{{ __('notifications.title') }}</x-nav-link>
                 @can('manage-center')
+                    <p class="px-3 pb-1 pt-3 text-xs font-extrabold uppercase tracking-wide text-slate-400">{{ __('layout.quick_create') }}</p>
+                    <div class="grid grid-cols-2 gap-1">
+                        <x-nav-link dropdownItem :href="route('students.create')">{{ __('students.create_button') }}</x-nav-link>
+                        <x-nav-link dropdownItem :href="route('parents.create')">{{ __('guardians.create_button') }}</x-nav-link>
+                        <x-nav-link dropdownItem :href="route('courses.create')">{{ __('courses.create_button') }}</x-nav-link>
+                        <x-nav-link dropdownItem :href="route('groups.create')">{{ __('groups.create_button') }}</x-nav-link>
+                        <x-nav-link dropdownItem :href="route('teachers.create')">{{ __('teachers.create_button') }}</x-nav-link>
+                        <x-nav-link dropdownItem :href="route('enrollments.create')">{{ __('enrollments.create_button') }}</x-nav-link>
+                    </div>
                     <p class="px-3 pb-1 pt-3 text-xs font-extrabold uppercase tracking-wide text-slate-400">{{ __('layout.manage') }}</p>
                     <x-nav-link dropdownItem :href="route('courses.index')" :active="request()->routeIs('courses.*')">{{ __('courses.title') }}</x-nav-link>
                     <x-nav-link dropdownItem :href="route('groups.index')" :active="request()->routeIs('groups.*')">{{ __('groups.title') }}</x-nav-link>

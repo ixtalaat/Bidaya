@@ -16,4 +16,5 @@ return [
     'explore' => 'Explore',
     'accounts' => 'Accounts',
     'footer_blurb' => 'Small groups, caring teachers, and parents who always know how their children are doing.',
+    'quick_create' => 'Quick add',
 ];
