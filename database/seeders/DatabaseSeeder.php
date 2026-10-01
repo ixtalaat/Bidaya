@@ -30,7 +30,8 @@ class DatabaseSeeder extends Seeder
     {
         $admin = User::factory()->withRole(Role::SuperAdmin)->create([
             'name' => 'Admin',
-            'email' => 'admin@bidaya.test',
+            'email' => config('services.bidaya.admin_email'),
+            'password' => config('services.bidaya.admin_password'),
         ]);
 
         User::factory()->withRole(Role::Manager)->create([
@@ -148,6 +149,6 @@ class DatabaseSeeder extends Seeder
             'feedback' => 'Strong vocabulary improvement.',
         ]);
 
-        $this->command->info("Demo logins (password: password): admin@bidaya.test, teacher@bidaya.test, parent@bidaya.test (admin id {$admin->id}).");
+        $this->command->info('Demo logins (password: password): admin, teacher and parent accounts seeded.');
     }
 }
