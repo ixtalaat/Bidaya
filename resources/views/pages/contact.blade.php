@@ -75,4 +75,16 @@
         </form>
     </div>
 </div>
+
+<div class="mx-auto mt-6 max-w-4xl">
+    <h2 class="mb-3 text-center font-display text-xl font-bold text-slate-900">{{ __('pages.map_title') }}</h2>
+    <div class="overflow-hidden clay-card p-2">
+        <iframe title="{{ __('pages.map_title') }}"
+                src="https://www.google.com/maps?q=Mit%20Mohsen%2C%20Mit%20Ghamr%2C%20Dakahlia%2C%20Egypt&output=embed"
+                class="h-80 w-full rounded-3xl border-0"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen></iframe>
+    </div>
+</div>
 @endsection

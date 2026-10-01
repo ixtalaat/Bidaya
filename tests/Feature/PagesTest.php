@@ -38,7 +38,11 @@ class PagesTest extends TestCase
     public function test_about_and_contact_pages_render(): void
     {
         $this->get(route('about'))->assertOk()->assertSee(__('pages.about_title'));
-        $this->get(route('contact'))->assertOk()->assertSee(__('pages.contact_title'));
+
+        $contact = $this->get(route('contact'));
+        $contact->assertOk()->assertSee(__('pages.contact_title'));
+        $contact->assertSee(__('pages.map_title'));
+        $contact->assertSee('google.com/maps', false);
     }
 
     public function test_contact_form_stores_a_message(): void
