@@ -69,6 +69,11 @@ class Group extends Model
         return $this->hasMany(Session::class)->orderBy('date')->orderBy('start_time');
     }
 
+    public function assessments(): HasMany
+    {
+        return $this->hasMany(Assessment::class)->orderByDesc('assessment_date')->orderByDesc('id');
+    }
+
     public function availableSeats(): int
     {
         return max(0, $this->capacity - $this->activeEnrollments()->count());

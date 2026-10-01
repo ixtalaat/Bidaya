@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AssessmentResultsController;
+use App\Http\Controllers\AssessmentsController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\CoursesController;
@@ -68,4 +70,8 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/sessions/{session}/status', [SessionsController::class, 'updateStatus'])->name('sessions.status');
     Route::get('/sessions/{session}/attendance', [SessionAttendanceController::class, 'edit'])->name('sessions.attendance.edit');
     Route::put('/sessions/{session}/attendance', [SessionAttendanceController::class, 'update'])->name('sessions.attendance.update');
+
+    Route::resource('groups.assessments', AssessmentsController::class)->scoped();
+    Route::get('/groups/{group}/assessments/{assessment}/results', [AssessmentResultsController::class, 'edit'])->name('groups.assessments.results.edit')->scopeBindings();
+    Route::put('/groups/{group}/assessments/{assessment}/results', [AssessmentResultsController::class, 'update'])->name('groups.assessments.results.update')->scopeBindings();
 });

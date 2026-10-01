@@ -69,4 +69,13 @@ return [
         'late' => 'Late',
         'excused' => 'Excused',
     ],
+    'assessment_types' => [
+        'quiz' => 'Quiz',
+        'homework' => 'Homework',
+        'midterm' => 'Midterm',
+        'final' => 'Final',
+        'practical' => 'Practical',
+        'participation' => 'Participation',
+        'project' => 'Project',
+    ],
 ];

@@ -69,4 +69,13 @@ return [
         'late' => 'متأخر',
         'excused' => 'معذور',
     ],
+    'assessment_types' => [
+        'quiz' => 'اختبار قصير',
+        'homework' => 'واجب',
+        'midterm' => 'نصفي',
+        'final' => 'نهائي',
+        'practical' => 'عملي',
+        'participation' => 'مشاركة',
+        'project' => 'مشروع',
+    ],
 ];
