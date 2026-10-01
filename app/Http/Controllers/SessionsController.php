@@ -108,7 +108,7 @@ class SessionsController extends Controller
     {
         Gate::authorize('view', $session);
 
-        $session->load(['group.course', 'teacher.user']);
+        $session->load(['group.course', 'teacher.user', 'attendances']);
 
         return view('sessions.show', ['session' => $session]);
     }

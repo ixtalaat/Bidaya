@@ -7,6 +7,7 @@ use App\Http\Controllers\EnrollmentsController;
 use App\Http\Controllers\GroupSchedulesController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\GuardiansController;
+use App\Http\Controllers\SessionAttendanceController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TeachersController;
@@ -65,4 +66,6 @@ Route::middleware('auth')->group(function (): void {
 
     Route::get('/sessions/{session}', [SessionsController::class, 'show'])->name('sessions.show');
     Route::post('/sessions/{session}/status', [SessionsController::class, 'updateStatus'])->name('sessions.status');
+    Route::get('/sessions/{session}/attendance', [SessionAttendanceController::class, 'edit'])->name('sessions.attendance.edit');
+    Route::put('/sessions/{session}/attendance', [SessionAttendanceController::class, 'update'])->name('sessions.attendance.update');
 });

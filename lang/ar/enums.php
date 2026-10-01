@@ -63,4 +63,10 @@ return [
         'cancelled' => 'ملغاة',
         'postponed' => 'مؤجلة',
     ],
+    'attendance_statuses' => [
+        'present' => 'حاضر',
+        'absent' => 'غائب',
+        'late' => 'متأخر',
+        'excused' => 'معذور',
+    ],
 ];

@@ -63,4 +63,10 @@ return [
         'cancelled' => 'Cancelled',
         'postponed' => 'Postponed',
     ],
+    'attendance_statuses' => [
+        'present' => 'Present',
+        'absent' => 'Absent',
+        'late' => 'Late',
+        'excused' => 'Excused',
+    ],
 ];

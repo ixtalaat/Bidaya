@@ -60,6 +60,11 @@ class Enrollment extends Model
         return $this->hasMany(Invoice::class);
     }
 
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
     #[Scope]
     protected function active(Builder $query): Builder
     {

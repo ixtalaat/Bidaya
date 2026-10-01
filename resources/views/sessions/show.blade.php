@@ -31,6 +31,12 @@
     @endif
 
     @can('update', $session)
+        <div class="mb-4 flex items-center justify-between rounded bg-slate-50 px-4 py-3 text-sm">
+            <span class="font-medium text-slate-500">{{ __('attendance.summary_title') }}: {{ $session->attendances->count() }}</span>
+            <a href="{{ route('sessions.attendance.edit', $session) }}" class="rounded bg-indigo-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-800">
+                {{ __('attendance.title') }}
+            </a>
+        </div>
         <form method="POST" action="{{ route('sessions.status', $session) }}" class="space-y-3 border-t border-slate-100 pt-4">
             @csrf
             <div class="flex flex-wrap items-end gap-2">
