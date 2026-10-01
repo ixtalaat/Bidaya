@@ -74,6 +74,11 @@ class Group extends Model
         return $this->hasMany(Assessment::class)->orderByDesc('assessment_date')->orderByDesc('id');
     }
 
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(Assignment::class)->orderBy('due_date')->orderBy('id');
+    }
+
     public function availableSeats(): int
     {
         return max(0, $this->capacity - $this->activeEnrollments()->count());

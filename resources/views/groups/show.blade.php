@@ -15,6 +15,9 @@
             </p>
         </div>
         <div class="flex shrink-0 gap-2">
+            <a href="{{ route('groups.assignments.index', $group) }}" class="clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
+                {{ __('assignments.title') }}
+            </a>
             <a href="{{ route('groups.assessments.index', $group) }}" class="clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
                 {{ __('assessments.title') }}
             </a>

@@ -90,4 +90,14 @@ return [
         'refunded' => 'مستردة',
         'cancelled' => 'ملغاة',
     ],
+    'assignment_statuses' => [
+        'draft' => 'مسودة',
+        'published' => 'منشور',
+        'closed' => 'مغلق',
+    ],
+    'submission_statuses' => [
+        'submitted' => 'تم التسليم',
+        'late' => 'متأخر',
+        'reviewed' => 'تم التصحيح',
+    ],
 ];

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AssessmentResultsController;
 use App\Http\Controllers\AssessmentsController;
+use App\Http\Controllers\AssignmentGradesController;
+use App\Http\Controllers\AssignmentsController;
 use App\Http\Controllers\AuditLogsController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetController;
@@ -18,6 +20,7 @@ use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SessionAttendanceController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\SubmissionsController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
@@ -92,6 +95,11 @@ Route::middleware('auth')->group(function (): void {
     Route::resource('groups.assessments', AssessmentsController::class)->scoped();
     Route::get('/groups/{group}/assessments/{assessment}/results', [AssessmentResultsController::class, 'edit'])->name('groups.assessments.results.edit')->scopeBindings();
     Route::put('/groups/{group}/assessments/{assessment}/results', [AssessmentResultsController::class, 'update'])->name('groups.assessments.results.update')->scopeBindings();
+
+    Route::resource('groups.assignments', AssignmentsController::class)->scoped();
+    Route::resource('groups.assignments.submissions', SubmissionsController::class)->only(['store', 'update'])->scoped();
+    Route::get('/groups/{group}/assignments/{assignment}/grades', [AssignmentGradesController::class, 'edit'])->name('groups.assignments.grades.edit')->scopeBindings();
+    Route::put('/groups/{group}/assignments/{assignment}/grades', [AssignmentGradesController::class, 'update'])->name('groups.assignments.grades.update')->scopeBindings();
 
     Route::middleware('role:super_admin,manager,accountant')->group(function (): void {
         Route::resource('payments', PaymentsController::class)->only(['index', 'create', 'store', 'show']);

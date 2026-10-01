@@ -90,4 +90,14 @@ return [
         'refunded' => 'Refunded',
         'cancelled' => 'Cancelled',
     ],
+    'assignment_statuses' => [
+        'draft' => 'Draft',
+        'published' => 'Published',
+        'closed' => 'Closed',
+    ],
+    'submission_statuses' => [
+        'submitted' => 'Submitted',
+        'late' => 'Late',
+        'reviewed' => 'Reviewed',
+    ],
 ];

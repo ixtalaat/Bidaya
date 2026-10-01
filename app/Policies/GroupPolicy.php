@@ -21,8 +21,15 @@ class GroupPolicy
      */
     public function view(User $user, Group $group): bool
     {
-        return $user->hasRole(Role::SuperAdmin, Role::Manager, Role::Accountant)
-            || $this->teachesGroup($user, $group);
+        if ($user->hasRole(Role::SuperAdmin, Role::Manager, Role::Accountant)) {
+            return true;
+        }
+
+        if ($this->teachesGroup($user, $group)) {
+            return true;
+        }
+
+        return $this->linkedToGroup($user, $group->id);
     }
 
     /**
@@ -52,5 +59,19 @@ class GroupPolicy
     private function teachesGroup(User $user, Group $group): bool
     {
         return $user->hasRole(Role::Teacher) && $user->teacher?->groups()->whereKey($group->id)->exists();
+    }
+
+    private function linkedToGroup(User $user, int $groupId): bool
+    {
+        $guardian = $user->guardian;
+
+        if ($guardian !== null && $guardian->students()->whereHas(
+            'enrollments',
+            fn ($query) => $query->active()->where('group_id', $groupId)
+        )->exists()) {
+            return true;
+        }
+
+        return $user->student?->enrollments()->active()->where('group_id', $groupId)->exists() ?? false;
     }
 }
