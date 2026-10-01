@@ -4,15 +4,15 @@
 
 @section('content')
 <div class="mb-6 flex items-center justify-between">
-    <h1 class="text-xl font-bold">{{ __('reports.courses_title') }}</h1>
-    <button onclick="window.print()" class="rounded bg-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-800 hover:bg-slate-300 print:hidden">
+    <h1 class="font-display text-xl font-bold">{{ __('reports.courses_title') }}</h1>
+    <button onclick="window.print()" class="clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900 print:hidden">
         {{ __('reports.print_button') }}
     </button>
 </div>
 
-<div class="overflow-hidden rounded-lg bg-white shadow">
+<div class="overflow-hidden clay-card">
     <table class="w-full text-sm">
-        <thead class="bg-slate-100">
+        <thead class="bg-background">
             <tr>
                 <th class="px-4 py-2 text-start font-medium">{{ __('reports.course') }}</th>
                 <th class="px-4 py-2 text-start font-medium">{{ __('reports.groups_count') }}</th>

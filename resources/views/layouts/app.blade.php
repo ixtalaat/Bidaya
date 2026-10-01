@@ -11,8 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Marhey:wght@400;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="flex min-h-screen flex-col bg-slate-50 text-slate-900">
-<header class="border-b border-slate-200 bg-white">
+<body class="flex min-h-screen flex-col bg-background text-slate-900">
+<header class="border-b-[3px] border-slate-900 bg-white">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <x-logo :tagline="true" />
         <nav class="flex flex-wrap items-center gap-3 text-sm">
@@ -60,7 +60,7 @@
     <div id="flash-data" class="hidden" data-success="{{ session('status') }}" data-errors='@json($errors->all())' data-confirm-button="{{ __('layout.confirm_button') }}" data-cancel-button="{{ __('layout.cancel_button') }}"></div>
     @yield('content')
 </main>
-<footer class="border-t border-slate-200 bg-white">
+<footer class="border-t-[3px] border-slate-900 bg-white">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-6">
         <x-logo :tagline="true" markSize="h-8 w-8" textSize="text-lg" />
         <nav class="flex flex-wrap items-center gap-4 text-sm text-slate-600">

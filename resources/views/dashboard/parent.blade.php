@@ -3,10 +3,10 @@
 @section('title', __('dashboard.parent_title'))
 
 @section('content')
-<h1 class="mb-6 text-xl font-bold">{{ __('dashboard.parent_title') }}</h1>
+<h1 class="mb-6 font-display text-xl font-bold">{{ __('dashboard.parent_title') }}</h1>
 
 @forelse ($children as $child)
-    <div class="mb-4 rounded-lg bg-white p-4 shadow">
+    <div class="mb-4 clay-card p-4">
         <h2 class="text-lg font-bold">{{ $child['student']->name }}</h2>
         <p class="mt-1 text-sm text-slate-500">
             {{ __('dashboard.active_courses_label') }}: {{ $child['enrollments']->count() }} —
@@ -48,10 +48,10 @@
         </div>
     </div>
 @empty
-    <p class="rounded-lg bg-white p-6 text-sm text-slate-500 shadow">{{ __('dashboard.no_children') }}</p>
+    <p class="clay-card p-6 text-sm text-slate-500">{{ __('dashboard.no_children') }}</p>
 @endforelse
 
-<div class="rounded-lg bg-white p-4 shadow">
+<div class="clay-card p-4">
     <h2 class="mb-2 font-bold">{{ __('dashboard.notifications') }}</h2>
     <ul class="space-y-1 text-sm">
         @forelse ($unreadNotifications as $notification)

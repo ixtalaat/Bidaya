@@ -3,7 +3,7 @@
 @section('title', __('students.show_title'))
 
 @section('content')
-<div class="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow">
+<div class="mx-auto max-w-2xl clay-card p-6">
     <div class="mb-4 flex items-start justify-between gap-4">
         <div class="flex items-center gap-4">
             @if ($student->photo_path)
@@ -11,7 +11,7 @@
                      class="h-16 w-16 rounded-full object-cover">
             @endif
             <div>
-                <h1 class="text-xl font-bold">{{ $student->name }}</h1>
+                <h1 class="font-display text-xl font-bold">{{ $student->name }}</h1>
                 <p class="mt-1 text-sm text-slate-500">
                     {{ $student->gender->label() }} —
                     {{ __('students.years_old', ['count' => $student->age ?? '—']) }} —
@@ -19,7 +19,7 @@
                 </p>
             </div>
         </div>
-        <a href="{{ route('students.edit', $student) }}" class="shrink-0 rounded bg-slate-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-slate-800">
+        <a href="{{ route('students.edit', $student) }}" class="shrink-0 rounded clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
             {{ __('students.edit_button') }}
         </a>
     </div>
@@ -54,7 +54,7 @@
     <ul class="space-y-1 text-sm">
         @forelse ($student->guardians as $guardian)
             <li>
-                <a href="{{ route('parents.show', $guardian) }}" class="text-indigo-700 hover:underline">{{ $guardian->name }}</a>
+                <a href="{{ route('parents.show', $guardian) }}" class="text-primary font-semibold hover:underline">{{ $guardian->name }}</a>
                 <span class="text-slate-500">({{ $guardian->pivot->relationship->label() }} — {{ $guardian->phone }})</span>
             </li>
         @empty
@@ -66,7 +66,7 @@
           data-confirm="{{ __('students.delete_confirm') }}">
         @csrf
         @method('DELETE')
-        <button type="submit" class="rounded bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">
+        <button type="submit" class="rounded clay-btn cursor-pointer bg-red-600 px-4 py-2 text-sm font-extrabold text-white">
             {{ __('students.delete_button') }}
         </button>
     </form>

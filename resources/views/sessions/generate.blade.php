@@ -4,25 +4,25 @@
 
 @section('content')
 <div class="mb-6">
-    <a href="{{ route('groups.show', $group) }}" class="text-sm text-indigo-700 hover:underline">← {{ $group->name }}</a>
-    <h1 class="mt-1 text-xl font-bold">{{ __('sessions.generate_title') }}</h1>
+    <a href="{{ route('groups.show', $group) }}" class="text-sm text-primary font-semibold hover:underline">← {{ $group->name }}</a>
+    <h1 class="mt-1 font-display text-xl font-bold">{{ __('sessions.generate_title') }}</h1>
     <p class="mt-1 text-sm text-slate-500">{{ __('sessions.generate_hint') }}</p>
 </div>
 
-<div class="mb-6 rounded-lg bg-white p-6 shadow">
+<div class="mb-6 clay-card p-6">
     <form method="GET" action="{{ route('sessions.generate', $group) }}" class="flex flex-wrap items-end gap-3">
         <div>
             <label for="start_date" class="mb-1 block text-sm font-medium">{{ __('enrollments.start_date') }}</label>
             <input id="start_date" type="date" name="start_date" value="{{ $startDate ?: $group->start_date->format('Y-m-d') }}" required
-                   class="rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+                   class="rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
         </div>
         <div>
             <label for="end_date" class="mb-1 block text-sm font-medium">{{ __('enrollments.end_date') }}</label>
             <input id="end_date" type="date" name="end_date"
                    value="{{ $endDate ?: $group->end_date?->format('Y-m-d') }}"
-                   class="rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+                   class="rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
         </div>
-        <button type="submit" class="rounded bg-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+        <button type="submit" class="rounded clay-btn cursor-pointer bg-white px-4 py-2 text-sm font-extrabold text-slate-900">
             {{ __('sessions.preview_title') }}
         </button>
     </form>
@@ -35,9 +35,9 @@
 </div>
 
 @if ($startDate && $endDate)
-    <div class="overflow-hidden rounded-lg bg-white shadow">
+    <div class="overflow-hidden clay-card">
         <table class="w-full text-sm">
-            <thead class="bg-slate-100">
+            <thead class="bg-background">
                 <tr>
                     <th class="px-4 py-2 text-start font-medium">{{ __('sessions.date') }}</th>
                     <th class="px-4 py-2 text-start font-medium">{{ __('schedules.day') }}</th>
@@ -78,7 +78,7 @@
             @csrf
             <input type="hidden" name="start_date" value="{{ $startDate }}">
             <input type="hidden" name="end_date" value="{{ $endDate }}">
-            <button type="submit" class="rounded bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800">
+            <button type="submit" class="rounded clay-btn cursor-pointer bg-secondary px-4 py-2 text-sm font-extrabold text-slate-900">
                 {{ __('sessions.confirm_generate') }} ({{ count($preview['rows']) }})
             </button>
         </form>

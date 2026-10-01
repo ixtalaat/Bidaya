@@ -4,12 +4,12 @@
 
 @section('content')
 <div class="mx-auto max-w-3xl text-center">
-    <h1 class="text-3xl font-extrabold">{{ __('pages.contact_title') }}</h1>
+    <h1 class="font-display text-3xl font-extrabold">{{ __('pages.contact_title') }}</h1>
     <p class="mt-2 text-slate-600">{{ __('pages.contact_subtitle') }}</p>
 </div>
 
 <div class="mx-auto mt-8 grid max-w-4xl grid-cols-1 gap-4 md:grid-cols-2">
-    <div class="rounded-lg bg-white p-6 shadow">
+    <div class="clay-card p-6">
         <h2 class="font-extrabold">{{ __('pages.info_title') }}</h2>
         <dl class="mt-4 space-y-3 text-sm">
             <div>
@@ -31,21 +31,21 @@
         </dl>
     </div>
 
-    <div class="rounded-lg bg-white p-6 shadow">
+    <div class="clay-card p-6">
         <h2 class="mb-4 font-extrabold">{{ __('pages.form_title') }}</h2>
         <form method="POST" action="{{ route('contact.send') }}" class="space-y-3">
             @csrf
             <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
                 <div>
                     <input type="text" name="name" value="{{ old('name') }}" placeholder="{{ __('pages.form_name') }}" required
-                           class="w-full rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+                           class="w-full rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
                     @error('name')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
                     <input type="text" name="phone" value="{{ old('phone') }}" placeholder="{{ __('pages.form_phone') }}" required
-                           class="w-full rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+                           class="w-full rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
                     @error('phone')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -53,23 +53,23 @@
             </div>
             <div>
                 <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ __('pages.form_email') }}"
-                       class="w-full rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+                       class="w-full rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
                 @error('email')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
             <div>
                 <input type="text" name="subject" value="{{ old('subject') }}" placeholder="{{ __('pages.form_subject') }}"
-                       class="w-full rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+                       class="w-full rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
             </div>
             <div>
                 <textarea name="message" rows="4" placeholder="{{ __('pages.form_message') }}" required
-                          class="w-full rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">{{ old('message') }}</textarea>
+                          class="w-full rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">{{ old('message') }}</textarea>
                 @error('message')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
-            <button type="submit" class="w-full rounded bg-indigo-700 px-4 py-2 text-sm font-bold text-white hover:bg-indigo-800">
+            <button type="submit" class="clay-btn w-full cursor-pointer bg-secondary px-4 py-2 text-sm font-extrabold text-slate-900">
                 {{ __('pages.form_send') }}
             </button>
         </form>

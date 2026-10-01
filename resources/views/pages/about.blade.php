@@ -5,28 +5,28 @@
 @section('content')
 <div class="mx-auto max-w-3xl text-center">
     <x-logo :tagline="true" markSize="h-20 w-20" textSize="text-3xl" />
-    <h1 class="mt-4 text-3xl font-extrabold">{{ __('pages.about_title') }}</h1>
+    <h1 class="mt-4 font-display text-3xl font-extrabold">{{ __('pages.about_title') }}</h1>
     <p class="mt-2 text-slate-600">{{ __('pages.about_subtitle') }}</p>
 </div>
 
-<div class="mx-auto mt-8 max-w-3xl rounded-lg bg-white p-6 shadow">
+<div class="mx-auto mt-8 max-w-3xl clay-card p-6">
     <h2 class="font-extrabold">{{ __('pages.story_title') }}</h2>
     <p class="mt-2 text-sm leading-relaxed text-slate-600">{{ __('pages.story_p1') }}</p>
     <p class="mt-2 text-sm leading-relaxed text-slate-600">{{ __('pages.story_p2') }}</p>
 </div>
 
 <div class="mx-auto mt-4 grid max-w-3xl grid-cols-1 gap-4 md:grid-cols-2">
-    <div class="rounded-lg bg-white p-6 shadow">
+    <div class="clay-card p-6">
         <h2 class="font-extrabold text-indigo-700">{{ __('pages.mission_title') }}</h2>
         <p class="mt-2 text-sm leading-relaxed text-slate-600">{{ __('pages.mission_text') }}</p>
     </div>
-    <div class="rounded-lg bg-white p-6 shadow">
+    <div class="clay-card p-6">
         <h2 class="font-extrabold text-indigo-700">{{ __('pages.vision_title') }}</h2>
         <p class="mt-2 text-sm leading-relaxed text-slate-600">{{ __('pages.vision_text') }}</p>
     </div>
 </div>
 
-<div class="mx-auto mt-4 max-w-3xl rounded-lg bg-white p-6 shadow">
+<div class="mx-auto mt-4 max-w-3xl clay-card p-6">
     <h2 class="font-extrabold">{{ __('pages.values_title') }}</h2>
     <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
         @foreach (['care', 'clarity', 'growth'] as $value)
@@ -39,7 +39,7 @@
 </div>
 
 <div class="mx-auto mt-6 max-w-3xl text-center">
-    <a href="{{ route('contact') }}" class="inline-block rounded bg-indigo-700 px-6 py-2.5 text-sm font-bold text-white hover:bg-indigo-800">
+    <a href="{{ route('contact') }}" class="clay-btn inline-block cursor-pointer bg-secondary px-6 py-2.5 text-sm font-extrabold text-slate-900">
         {{ __('pages.cta_button') }}
     </a>
 </div>

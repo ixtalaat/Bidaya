@@ -4,21 +4,21 @@
 
 @section('content')
 <div class="mb-6 flex items-center justify-between">
-    <h1 class="text-xl font-bold">{{ __('guardians.title') }}</h1>
-    <a href="{{ route('parents.create') }}" class="rounded bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800">
+    <h1 class="font-display text-xl font-bold">{{ __('guardians.title') }}</h1>
+    <a href="{{ route('parents.create') }}" class="rounded clay-btn cursor-pointer bg-secondary px-4 py-2 text-sm font-extrabold text-slate-900">
         {{ __('guardians.create_button') }}
     </a>
 </div>
 
 <form method="GET" action="{{ route('parents.index') }}" class="mb-4 flex gap-2">
     <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('guardians.search_placeholder') }}"
-           class="w-full max-w-sm rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
-    <button type="submit" class="rounded bg-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+           class="w-full max-w-sm rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
+    <button type="submit" class="rounded clay-btn cursor-pointer bg-white px-4 py-2 text-sm font-extrabold text-slate-900">
         {{ __('guardians.search_button') }}
     </button>
 </form>
 
-<div class="overflow-hidden rounded-lg bg-white shadow">
+<div class="overflow-hidden clay-card">
     <table class="w-full text-sm">
         <thead class="bg-slate-100 text-start">
             <tr>
@@ -32,12 +32,12 @@
             @forelse ($guardians as $guardian)
                 <tr class="border-t border-slate-100">
                     <td class="px-4 py-2">
-                        <a href="{{ route('parents.show', $guardian) }}" class="text-indigo-700 hover:underline">{{ $guardian->name }}</a>
+                        <a href="{{ route('parents.show', $guardian) }}" class="text-primary font-semibold hover:underline">{{ $guardian->name }}</a>
                     </td>
                     <td class="px-4 py-2">{{ $guardian->phone }}</td>
                     <td class="px-4 py-2">{{ $guardian->students_count }}</td>
                     <td class="px-4 py-2 text-end">
-                        <a href="{{ route('parents.edit', $guardian) }}" class="text-slate-600 hover:text-indigo-700">{{ __('students.edit_button') }}</a>
+                        <a href="{{ route('parents.edit', $guardian) }}" class="font-semibold text-slate-600 hover:text-primary">{{ __('students.edit_button') }}</a>
                     </td>
                 </tr>
             @empty

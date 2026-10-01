@@ -3,10 +3,10 @@
 @section('title', __('assessments.show_title'))
 
 @section('content')
-<div class="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow">
+<div class="mx-auto max-w-2xl clay-card p-6">
     <div class="mb-4 flex items-start justify-between">
         <div>
-            <h1 class="text-xl font-bold">{{ $assessment->name }}</h1>
+            <h1 class="font-display text-xl font-bold">{{ $assessment->name }}</h1>
             <p class="mt-1 text-sm text-slate-500">
                 {{ $assessment->type->label() }} —
                 {{ __('assessments.max_score') }}: {{ number_format($assessment->max_score, 2) }} —
@@ -19,10 +19,10 @@
         </div>
         <div class="flex shrink-0 gap-2">
             @can('update', $assessment)
-                <a href="{{ route('groups.assessments.results.edit', [$group, $assessment]) }}" class="rounded bg-indigo-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-800">
+                <a href="{{ route('groups.assessments.results.edit', [$group, $assessment]) }}" class="rounded clay-btn cursor-pointer bg-secondary px-3 py-1.5 text-sm font-extrabold text-slate-900">
                     {{ __('assessments.grade_button') }}
                 </a>
-                <a href="{{ route('groups.assessments.edit', [$group, $assessment]) }}" class="rounded bg-slate-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-slate-800">
+                <a href="{{ route('groups.assessments.edit', [$group, $assessment]) }}" class="rounded clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
                     {{ __('students.edit_button') }}
                 </a>
             @endcan
@@ -35,7 +35,7 @@
 
     <div class="overflow-hidden rounded border border-slate-200">
         <table class="w-full text-sm">
-            <thead class="bg-slate-100">
+            <thead class="bg-background">
                 <tr>
                     <th class="px-4 py-2 text-start font-medium">{{ __('assessments.student') }}</th>
                     <th class="px-4 py-2 text-start font-medium">{{ __('assessments.score') }}</th>
@@ -65,7 +65,7 @@
               data-confirm="{{ __('assessments.delete_confirm') }}">
             @csrf
             @method('DELETE')
-            <button type="submit" class="rounded bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">
+            <button type="submit" class="rounded clay-btn cursor-pointer bg-red-600 px-4 py-2 text-sm font-extrabold text-white">
                 {{ __('assessments.delete_button') }}
             </button>
         </form>

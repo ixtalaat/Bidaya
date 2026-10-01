@@ -3,12 +3,12 @@
 @section('title', __('reports.audit_title'))
 
 @section('content')
-<h1 class="mb-6 text-xl font-bold">{{ __('reports.audit_title') }}</h1>
+<h1 class="mb-6 font-display text-xl font-bold">{{ __('reports.audit_title') }}</h1>
 
 <form method="GET" action="{{ route('audit-logs.index') }}" class="mb-4 flex flex-wrap items-end gap-2">
     <div>
         <label for="action" class="mb-1 block text-sm font-medium">{{ __('reports.action') }}</label>
-        <select id="action" name="action" class="rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+        <select id="action" name="action" class="rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
             <option value="">{{ __('reports.all_actions') }}</option>
             @foreach ($actions as $action)
                 <option value="{{ $action }}" @selected(request('action') === $action)>{{ $action }}</option>
@@ -18,21 +18,21 @@
     <div>
         <label for="date_from" class="mb-1 block text-sm font-medium">{{ __('reports.from') }}</label>
         <input id="date_from" type="date" name="date_from" value="{{ request('date_from') }}"
-               class="rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+               class="rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
     </div>
     <div>
         <label for="date_to" class="mb-1 block text-sm font-medium">{{ __('reports.to') }}</label>
         <input id="date_to" type="date" name="date_to" value="{{ request('date_to') }}"
-               class="rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+               class="rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
     </div>
-    <button type="submit" class="rounded bg-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+    <button type="submit" class="rounded clay-btn cursor-pointer bg-white px-4 py-2 text-sm font-extrabold text-slate-900">
         {{ __('reports.filter_button') }}
     </button>
 </form>
 
-<div class="overflow-hidden rounded-lg bg-white shadow">
+<div class="overflow-hidden clay-card">
     <table class="w-full text-sm">
-        <thead class="bg-slate-100">
+        <thead class="bg-background">
             <tr>
                 <th class="px-4 py-2 text-start font-medium">{{ __('reports.date') }}</th>
                 <th class="px-4 py-2 text-start font-medium">{{ __('reports.user') }}</th>
@@ -46,7 +46,7 @@
                     <td class="px-4 py-2">{{ $log->created_at->toDateTimeString() }}</td>
                     <td class="px-4 py-2">{{ $log->user?->name ?? '—' }}</td>
                     <td class="px-4 py-2">
-                        <a href="{{ route('audit-logs.show', $log) }}" class="text-indigo-700 hover:underline">{{ $log->action }}</a>
+                        <a href="{{ route('audit-logs.show', $log) }}" class="text-primary font-semibold hover:underline">{{ $log->action }}</a>
                     </td>
                     <td class="px-4 py-2">{{ class_basename($log->entity_type) }} #{{ $log->entity_id }}</td>
                 </tr>

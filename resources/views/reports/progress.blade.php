@@ -4,8 +4,8 @@
 
 @section('content')
 <div class="mb-6 flex items-center justify-between">
-    <h1 class="text-xl font-bold">{{ __('reports.progress_title') }}</h1>
-    <button onclick="window.print()" class="rounded bg-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-800 hover:bg-slate-300 print:hidden">
+    <h1 class="font-display text-xl font-bold">{{ __('reports.progress_title') }}</h1>
+    <button onclick="window.print()" class="clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900 print:hidden">
         {{ __('reports.print_button') }}
     </button>
 </div>
@@ -14,7 +14,7 @@
     <div>
         <label for="group_id" class="mb-1 block text-sm font-medium">{{ __('reports.group') }}</label>
         <select id="group_id" name="group_id" required
-                class="rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+                class="rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
             @foreach ($allGroups as $group)
                 <option value="{{ $group->id }}" @selected((string) $groupId === (string) $group->id)>
                     {{ $group->name }} ({{ $group->course->name }})
@@ -22,15 +22,15 @@
             @endforeach
         </select>
     </div>
-    <button type="submit" class="rounded bg-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+    <button type="submit" class="rounded clay-btn cursor-pointer bg-white px-4 py-2 text-sm font-extrabold text-slate-900">
         {{ __('reports.filter_button') }}
     </button>
 </form>
 
 @if ($groupId)
-    <div class="overflow-hidden rounded-lg bg-white shadow">
+    <div class="overflow-hidden clay-card">
         <table class="w-full text-sm">
-            <thead class="bg-slate-100">
+            <thead class="bg-background">
                 <tr>
                     <th class="px-4 py-2 text-start font-medium">{{ __('reports.student') }}</th>
                     <th class="px-4 py-2 text-start font-medium">{{ __('reports.status') }}</th>
@@ -57,6 +57,6 @@
         </table>
     </div>
 @else
-    <p class="rounded-lg bg-white p-6 text-sm text-slate-500 shadow">{{ __('reports.select_group') }}</p>
+    <p class="clay-card p-6 text-sm text-slate-500">{{ __('reports.select_group') }}</p>
 @endif
 @endsection

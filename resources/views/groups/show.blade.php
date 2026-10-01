@@ -3,10 +3,10 @@
 @section('title', __('groups.show_title'))
 
 @section('content')
-<div class="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow">
+<div class="mx-auto max-w-2xl clay-card p-6">
     <div class="mb-4 flex items-start justify-between">
         <div>
-            <h1 class="text-xl font-bold">{{ $group->name }}</h1>
+            <h1 class="font-display text-xl font-bold">{{ $group->name }}</h1>
             <p class="mt-1 text-sm text-slate-500">
                 {{ $group->course->name }} — {{ $group->teacher->user->name }} — {{ $group->status->label() }}
             </p>
@@ -15,16 +15,16 @@
             </p>
         </div>
         <div class="flex shrink-0 gap-2">
-            <a href="{{ route('groups.assessments.index', $group) }}" class="rounded bg-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-800 hover:bg-slate-300">
+            <a href="{{ route('groups.assessments.index', $group) }}" class="clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
                 {{ __('assessments.title') }}
             </a>
-            <a href="{{ route('groups.schedules.index', $group) }}" class="rounded bg-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-800 hover:bg-slate-300">
+            <a href="{{ route('groups.schedules.index', $group) }}" class="clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
                 {{ __('schedules.title') }}
             </a>
-            <a href="{{ route('enrollments.create', ['group_id' => $group->id]) }}" class="rounded bg-indigo-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-800">
+            <a href="{{ route('enrollments.create', ['group_id' => $group->id]) }}" class="rounded clay-btn cursor-pointer bg-secondary px-3 py-1.5 text-sm font-extrabold text-slate-900">
                 {{ __('groups.enroll_button') }}
             </a>
-            <a href="{{ route('groups.edit', $group) }}" class="rounded bg-slate-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-slate-800">
+            <a href="{{ route('groups.edit', $group) }}" class="rounded clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
                 {{ __('students.edit_button') }}
             </a>
         </div>
@@ -45,7 +45,7 @@
     <ul class="space-y-1 text-sm">
         @forelse ($group->enrollments as $enrollment)
             <li>
-                <a href="{{ route('enrollments.show', $enrollment) }}" class="text-indigo-700 hover:underline">{{ $enrollment->student->name }}</a>
+                <a href="{{ route('enrollments.show', $enrollment) }}" class="text-primary font-semibold hover:underline">{{ $enrollment->student->name }}</a>
                 <span class="text-slate-500">({{ $enrollment->status->label() }})</span>
             </li>
         @empty
@@ -57,7 +57,7 @@
           data-confirm="{{ __('groups.delete_confirm') }}">
         @csrf
         @method('DELETE')
-        <button type="submit" class="rounded bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">
+        <button type="submit" class="rounded clay-btn cursor-pointer bg-red-600 px-4 py-2 text-sm font-extrabold text-white">
             {{ __('groups.delete_button') }}
         </button>
     </form>

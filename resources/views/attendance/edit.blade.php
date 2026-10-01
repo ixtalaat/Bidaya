@@ -4,20 +4,20 @@
 
 @section('content')
 <div class="mb-6">
-    <a href="{{ route('sessions.show', $session) }}" class="text-sm text-indigo-700 hover:underline">← {{ $session->group->name }}</a>
-    <h1 class="mt-1 text-xl font-bold">{{ __('attendance.title') }}</h1>
+    <a href="{{ route('sessions.show', $session) }}" class="text-sm text-primary font-semibold hover:underline">← {{ $session->group->name }}</a>
+    <h1 class="mt-1 font-display text-xl font-bold">{{ __('attendance.title') }}</h1>
     <p class="mt-1 text-sm text-slate-500">
         {{ $session->date->toDateString() }} — {{ substr($session->start_time, 0, 5) }} – {{ substr($session->end_time, 0, 5) }} — {{ $session->status->label() }}
     </p>
 </div>
 
-<div class="overflow-hidden rounded-lg bg-white shadow">
+<div class="overflow-hidden clay-card">
     <form method="POST" action="{{ route('sessions.attendance.update', $session) }}">
         @csrf
         @method('PUT')
 
         <table class="w-full text-sm">
-            <thead class="bg-slate-100">
+            <thead class="bg-background">
                 <tr>
                     <th class="px-4 py-2 text-start font-medium">{{ __('attendance.student') }}</th>
                     @foreach (\App\Enums\AttendanceStatus::cases() as $option)
@@ -53,7 +53,7 @@
 
         @if ($enrollments->isNotEmpty())
             <div class="border-t border-slate-100 p-4">
-                <button type="submit" class="rounded bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800">
+                <button type="submit" class="rounded clay-btn cursor-pointer bg-secondary px-4 py-2 text-sm font-extrabold text-slate-900">
                     {{ __('attendance.save_button') }}
                 </button>
             </div>

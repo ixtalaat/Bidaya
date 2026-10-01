@@ -3,8 +3,8 @@
 @section('title', __('reports.audit_title'))
 
 @section('content')
-<div class="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow">
-    <h1 class="text-xl font-bold">{{ $log->action }}</h1>
+<div class="mx-auto max-w-2xl clay-card p-6">
+    <h1 class="font-display text-xl font-bold">{{ $log->action }}</h1>
     <p class="mt-1 text-sm text-slate-500">
         {{ $log->created_at->toDateTimeString() }} — {{ $log->user?->name ?? '—' }} —
         {{ class_basename($log->entity_type) }} #{{ $log->entity_id }}

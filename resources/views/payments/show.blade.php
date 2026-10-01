@@ -3,13 +3,13 @@
 @section('title', __('payments.show_title'))
 
 @section('content')
-<div class="mx-auto max-w-xl rounded-lg bg-white p-6 shadow print:shadow-none">
+<div class="mx-auto max-w-xl clay-card p-6 print:shadow-none">
     <div class="mb-4 flex items-start justify-between">
         <div>
-            <h1 class="text-xl font-bold">{{ config('app.name', 'Bidaya') }}</h1>
+            <h1 class="font-display text-xl font-bold">{{ config('app.name', 'Bidaya') }}</h1>
             <p class="mt-1 text-sm text-slate-500">{{ __('payments.receipt_no', ['id' => $payment->id]) }}</p>
         </div>
-        <button onclick="window.print()" class="rounded bg-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-800 hover:bg-slate-300 print:hidden">
+        <button onclick="window.print()" class="clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900 print:hidden">
             {{ __('payments.print_button') }}
         </button>
     </div>
@@ -68,7 +68,7 @@
         <form method="POST" action="{{ route('payments.refund', $payment) }}" class="mt-6 print:hidden"
               data-confirm="{{ __('payments.refund_confirm') }}">
             @csrf
-            <button type="submit" class="rounded bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">
+            <button type="submit" class="rounded clay-btn cursor-pointer bg-red-600 px-4 py-2 text-sm font-extrabold text-white">
                 {{ __('payments.refund_button') }}
             </button>
         </form>

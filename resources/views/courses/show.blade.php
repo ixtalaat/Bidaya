@@ -3,15 +3,15 @@
 @section('title', __('courses.show_title'))
 
 @section('content')
-<div class="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow">
+<div class="mx-auto max-w-2xl clay-card p-6">
     <div class="mb-4 flex items-start justify-between">
         <div>
-            <h1 class="text-xl font-bold">{{ $course->name }}</h1>
+            <h1 class="font-display text-xl font-bold">{{ $course->name }}</h1>
             <p class="mt-1 text-sm text-slate-500">
                 {{ $course->category ?? '—' }} — {{ $course->status->label() }} — {{ number_format($course->monthly_fee, 2) }}
             </p>
         </div>
-        <a href="{{ route('courses.edit', $course) }}" class="rounded bg-slate-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-slate-800">
+        <a href="{{ route('courses.edit', $course) }}" class="rounded clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
             {{ __('students.edit_button') }}
         </a>
     </div>
@@ -49,7 +49,7 @@
     <ul class="space-y-1 text-sm">
         @forelse ($course->groups as $group)
             <li>
-                <a href="{{ route('groups.show', $group) }}" class="text-indigo-700 hover:underline">{{ $group->name }}</a>
+                <a href="{{ route('groups.show', $group) }}" class="text-primary font-semibold hover:underline">{{ $group->name }}</a>
                 <span class="text-slate-500">({{ $group->status->label() }})</span>
             </li>
         @empty
@@ -61,7 +61,7 @@
           data-confirm="{{ __('courses.delete_confirm') }}">
         @csrf
         @method('DELETE')
-        <button type="submit" class="rounded bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800">
+        <button type="submit" class="rounded clay-btn cursor-pointer bg-red-600 px-4 py-2 text-sm font-extrabold text-white">
             {{ __('courses.delete_button') }}
         </button>
     </form>

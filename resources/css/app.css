@@ -36,6 +36,32 @@
     box-shadow: 3px 3px 0 var(--color-foreground);
 }
 
+.clay-btn {
+    border: 2px solid var(--color-foreground);
+    border-radius: 0.9rem;
+    box-shadow: 3px 3px 0 var(--color-foreground);
+    transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+}
+
+.clay-btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 var(--color-foreground);
+}
+
+.clay-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--color-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .clay-btn,
+    .clay-btn:hover,
+    .clay-btn:active {
+        transition: none;
+        transform: none;
+    }
+}
+
 @keyframes bidaya-float {
     0%,
     100% {

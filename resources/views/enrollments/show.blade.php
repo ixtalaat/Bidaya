@@ -3,15 +3,15 @@
 @section('title', __('enrollments.show_title'))
 
 @section('content')
-<div class="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow">
+<div class="mx-auto max-w-2xl clay-card p-6">
     <div class="mb-4 flex items-start justify-between">
         <div>
-            <h1 class="text-xl font-bold">{{ $enrollment->student->name }}</h1>
+            <h1 class="font-display text-xl font-bold">{{ $enrollment->student->name }}</h1>
             <p class="mt-1 text-sm text-slate-500">
                 {{ $enrollment->group->name }} ({{ $enrollment->group->course->name }}) — {{ $enrollment->status->label() }}
             </p>
         </div>
-        <a href="{{ route('enrollments.edit', $enrollment) }}" class="rounded bg-slate-700 px-3 py-1.5 text-sm font-semibold text-white hover:bg-slate-800">
+        <a href="{{ route('enrollments.edit', $enrollment) }}" class="rounded clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
             {{ __('students.edit_button') }}
         </a>
     </div>
@@ -46,7 +46,7 @@
     <h2 class="mb-2 mt-6 font-bold">{{ __('enrollments.invoices') }}</h2>
     <div class="overflow-hidden rounded border border-slate-200">
         <table class="w-full text-sm">
-            <thead class="bg-slate-100">
+            <thead class="bg-background">
                 <tr>
                     <th class="px-4 py-2 text-start font-medium">{{ __('enrollments.period') }}</th>
                     <th class="px-4 py-2 text-start font-medium">{{ __('enrollments.total') }}</th>
@@ -65,7 +65,7 @@
                         <td class="px-4 py-2 text-end">
                             @can('record-payments')
                                 @if ($invoice->remaining() > 0 && $invoice->status !== \App\Enums\InvoiceStatus::Cancelled)
-                                    <a href="{{ route('payments.create', ['invoice_id' => $invoice->id]) }}" class="text-indigo-700 hover:underline">{{ __('payments.create_button') }}</a>
+                                    <a href="{{ route('payments.create', ['invoice_id' => $invoice->id]) }}" class="text-primary font-semibold hover:underline">{{ __('payments.create_button') }}</a>
                                 @endif
                             @endcan
                         </td>

@@ -3,33 +3,33 @@
 @section('title', __('dashboard.admin_title'))
 
 @section('content')
-<h1 class="mb-6 text-xl font-bold">{{ __('dashboard.admin_title') }}</h1>
+<h1 class="mb-6 font-display text-xl font-bold">{{ __('dashboard.admin_title') }}</h1>
 
 <div class="mb-6 grid grid-cols-2 gap-4 md:grid-cols-5">
-    <div class="rounded-lg bg-white p-4 shadow">
+    <div class="clay-card p-4">
         <p class="text-sm text-slate-500">{{ __('dashboard.active_students') }}</p>
-        <p class="text-2xl font-bold">{{ $activeStudents }}</p>
+        <p class="font-display text-2xl font-bold">{{ $activeStudents }}</p>
     </div>
-    <div class="rounded-lg bg-white p-4 shadow">
+    <div class="clay-card p-4">
         <p class="text-sm text-slate-500">{{ __('dashboard.active_courses') }}</p>
-        <p class="text-2xl font-bold">{{ $activeCourses }}</p>
+        <p class="font-display text-2xl font-bold">{{ $activeCourses }}</p>
     </div>
-    <div class="rounded-lg bg-white p-4 shadow">
+    <div class="clay-card p-4">
         <p class="text-sm text-slate-500">{{ __('dashboard.active_groups') }}</p>
-        <p class="text-2xl font-bold">{{ $activeGroups }}</p>
+        <p class="font-display text-2xl font-bold">{{ $activeGroups }}</p>
     </div>
-    <div class="rounded-lg bg-white p-4 shadow">
+    <div class="clay-card p-4">
         <p class="text-sm text-slate-500">{{ __('dashboard.active_teachers') }}</p>
-        <p class="text-2xl font-bold">{{ $activeTeachers }}</p>
+        <p class="font-display text-2xl font-bold">{{ $activeTeachers }}</p>
     </div>
-    <div class="rounded-lg bg-white p-4 shadow">
+    <div class="clay-card p-4">
         <p class="text-sm text-slate-500">{{ __('dashboard.outstanding') }}</p>
-        <p class="text-2xl font-bold">{{ number_format($outstanding, 2) }}</p>
+        <p class="font-display text-2xl font-bold">{{ number_format($outstanding, 2) }}</p>
     </div>
 </div>
 
 <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-    <div class="rounded-lg bg-white p-4 shadow">
+    <div class="clay-card p-4">
         <h2 class="mb-2 font-bold">{{ __('dashboard.today_sessions') }} ({{ $todaySessions->count() }})</h2>
         <p class="mb-2 text-sm text-slate-500">
             {{ __('dashboard.attendance_today') }}:
@@ -38,7 +38,7 @@
         <ul class="space-y-1 text-sm">
             @forelse ($todaySessions as $session)
                 <li>
-                    <a href="{{ route('sessions.show', $session) }}" class="text-indigo-700 hover:underline">{{ $session->group->name }}</a>
+                    <a href="{{ route('sessions.show', $session) }}" class="text-primary font-semibold hover:underline">{{ $session->group->name }}</a>
                     <span class="text-slate-500">{{ substr($session->start_time, 0, 5) }} — {{ $session->teacher->user->name }} ({{ $session->status->label() }})</span>
                 </li>
             @empty
@@ -47,12 +47,12 @@
         </ul>
     </div>
 
-    <div class="rounded-lg bg-white p-4 shadow">
+    <div class="clay-card p-4">
         <h2 class="mb-2 font-bold">{{ __('dashboard.recent_enrollments') }}</h2>
         <ul class="space-y-1 text-sm">
             @forelse ($recentEnrollments as $enrollment)
                 <li>
-                    <a href="{{ route('enrollments.show', $enrollment) }}" class="text-indigo-700 hover:underline">{{ $enrollment->student->name }}</a>
+                    <a href="{{ route('enrollments.show', $enrollment) }}" class="text-primary font-semibold hover:underline">{{ $enrollment->student->name }}</a>
                     <span class="text-slate-500">{{ $enrollment->group->name }} ({{ $enrollment->status->label() }})</span>
                 </li>
             @empty
@@ -64,7 +64,7 @@
         <ul class="space-y-1 text-sm">
             @forelse ($recentPayments as $payment)
                 <li>
-                    <a href="{{ route('payments.show', $payment) }}" class="text-indigo-700 hover:underline">#{{ $payment->id }}</a>
+                    <a href="{{ route('payments.show', $payment) }}" class="text-primary font-semibold hover:underline">#{{ $payment->id }}</a>
                     <span class="text-slate-500">{{ $payment->invoice->enrollment->student->name }} — {{ number_format($payment->amount, 2) }}</span>
                 </li>
             @empty

@@ -4,30 +4,30 @@
 
 @section('content')
 <div class="mb-6 flex items-center justify-between">
-    <h1 class="text-xl font-bold">{{ __('sessions.title') }}</h1>
+    <h1 class="font-display text-xl font-bold">{{ __('sessions.title') }}</h1>
     @can('create', \App\Models\Session::class)
-        <a href="{{ route('sessions.create') }}" class="rounded bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800">
+        <a href="{{ route('sessions.create') }}" class="rounded clay-btn cursor-pointer bg-secondary px-4 py-2 text-sm font-extrabold text-slate-900">
             {{ __('sessions.create_button') }}
         </a>
     @endcan
 </div>
 
 <form method="GET" action="{{ route('sessions.index') }}" class="mb-4 flex flex-wrap gap-2">
-    <select name="group_id" class="rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+    <select name="group_id" class="rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
         <option value="">{{ __('sessions.all_groups') }}</option>
         @foreach ($allGroups as $group)
             <option value="{{ $group->id }}" @selected((string) request('group_id') === (string) $group->id)>{{ $group->name }}</option>
         @endforeach
     </select>
     <input type="date" name="date" value="{{ request('date') }}"
-           class="rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
-    <select name="status" class="rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+           class="rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
+    <select name="status" class="rounded border-2 border-slate-900 px-3 py-2 text-sm focus:border-primary focus:outline-none">
         <option value="">{{ __('sessions.all_statuses') }}</option>
         @foreach (\App\Enums\SessionStatus::cases() as $option)
             <option value="{{ $option->value }}" @selected(request('status') === $option->value)>{{ $option->label() }}</option>
         @endforeach
     </select>
-    <button type="submit" class="rounded bg-slate-700 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+    <button type="submit" class="rounded clay-btn cursor-pointer bg-white px-4 py-2 text-sm font-extrabold text-slate-900">
         {{ __('sessions.filter_button') }}
     </button>
 </form>
@@ -43,9 +43,9 @@
     </div>
 @endif
 
-<div class="overflow-hidden rounded-lg bg-white shadow">
+<div class="overflow-hidden clay-card">
     <table class="w-full text-sm">
-        <thead class="bg-slate-100">
+        <thead class="bg-background">
             <tr>
                 <th class="px-4 py-2 text-start font-medium">{{ __('sessions.date') }}</th>
                 <th class="px-4 py-2 text-start font-medium">{{ __('sessions.group') }}</th>
@@ -59,7 +59,7 @@
                 <tr class="border-t border-slate-100">
                     <td class="px-4 py-2">{{ $session->date->toDateString() }}</td>
                     <td class="px-4 py-2">
-                        <a href="{{ route('sessions.show', $session) }}" class="text-indigo-700 hover:underline">{{ $session->group->name }}</a>
+                        <a href="{{ route('sessions.show', $session) }}" class="text-primary font-semibold hover:underline">{{ $session->group->name }}</a>
                     </td>
                     <td class="px-4 py-2">{{ substr($session->start_time, 0, 5) }} – {{ substr($session->end_time, 0, 5) }}</td>
                     <td class="px-4 py-2">{{ $session->classroom ?? '—' }}</td>
