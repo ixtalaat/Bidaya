@@ -5,6 +5,7 @@ use App\Http\Controllers\AssessmentsController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnrollmentsController;
 use App\Http\Controllers\GroupSchedulesController;
 use App\Http\Controllers\GroupsController;
@@ -44,7 +45,7 @@ Route::middleware('guest')->group(function (): void {
 
 Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-    Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/sessions', [SessionsController::class, 'index'])->name('sessions.index');
 

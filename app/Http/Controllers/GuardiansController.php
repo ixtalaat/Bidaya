@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Role;
 use App\Http\Requests\StoreGuardianRequest;
 use App\Http\Requests\UpdateGuardianRequest;
 use App\Models\Guardian;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -37,7 +40,7 @@ class GuardiansController extends Controller
      */
     public function create(): View
     {
-        return view('parents.create');
+        return view('parents.create', ['parentUsers' => $this->linkableParentUsers()]);
     }
 
     /**
@@ -65,7 +68,10 @@ class GuardiansController extends Controller
      */
     public function edit(Guardian $guardian): View
     {
-        return view('parents.edit', ['guardian' => $guardian]);
+        return view('parents.edit', [
+            'guardian' => $guardian,
+            'parentUsers' => $this->linkableParentUsers($guardian->user_id),
+        ]);
     }
 
     /**
@@ -86,5 +92,21 @@ class GuardiansController extends Controller
         $guardian->delete();
 
         return redirect()->route('parents.index')->with('status', __('guardians.deleted'));
+    }
+
+    /**
+     * Parent-role users available for linking, plus the currently linked one.
+     *
+     * @return Collection<int, User>
+     */
+    private function linkableParentUsers(?int $currentUserId = null): Collection
+    {
+        return User::where('role', Role::Parent)
+            ->where(fn ($query) => $query
+                ->whereDoesntHave('guardian')
+                ->when($currentUserId, fn ($query, int $id) => $query->orWhere('id', $id)))
+            ->orderBy('name')
+            ->orderBy('id')
+            ->get();
     }
 }

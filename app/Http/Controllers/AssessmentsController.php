@@ -55,7 +55,7 @@ class AssessmentsController extends Controller
     {
         Gate::authorize('view', $assessment);
 
-        $assessment->load(['group.course', 'results.enrollment.student']);
+        $assessment->load(['group.course', 'results.assessment', 'results.enrollment.student']);
 
         return view('assessments.show', ['group' => $group, 'assessment' => $assessment]);
     }

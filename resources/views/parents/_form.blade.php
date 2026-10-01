@@ -44,4 +44,20 @@
             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
+
+    <div>
+        <label for="user_id" class="mb-1 block text-sm font-medium">{{ __('guardians.user_account') }}</label>
+        <select id="user_id" name="user_id"
+                class="w-full rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none">
+            <option value="">{{ __('guardians.no_account') }}</option>
+            @foreach ($parentUsers as $parentUser)
+                <option value="{{ $parentUser->id }}" @selected((string) old('user_id', $guardian->user_id) === (string) $parentUser->id)>
+                    {{ $parentUser->name }} ({{ $parentUser->email }})
+                </option>
+            @endforeach
+        </select>
+        @error('user_id')
+            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+        @enderror
+    </div>
 </div>
