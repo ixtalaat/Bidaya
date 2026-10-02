@@ -81,7 +81,7 @@ class EnrollmentsController extends Controller
      */
     public function show(Enrollment $enrollment): View
     {
-        $enrollment->load(['student', 'group.course', 'group.teacher.user', 'invoices', 'coveringEnrollment']);
+        $enrollment->load(['student', 'group.course', 'group.teacher.user', 'invoices', 'coveringEnrollment', 'certificate']);
 
         return view('enrollments.show', ['enrollment' => $enrollment]);
     }

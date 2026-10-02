@@ -7,6 +7,7 @@ use App\Http\Controllers\AssignmentsController;
 use App\Http\Controllers\AuditLogsController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\CertificatesController;
 use App\Http\Controllers\ContactMessagesController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\DashboardController;
@@ -91,6 +92,9 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/sessions/{session}/status', [SessionsController::class, 'updateStatus'])->name('sessions.status');
     Route::get('/sessions/{session}/attendance', [SessionAttendanceController::class, 'edit'])->name('sessions.attendance.edit');
     Route::put('/sessions/{session}/attendance', [SessionAttendanceController::class, 'update'])->name('sessions.attendance.update');
+
+    Route::get('/certificates/{certificate}', [CertificatesController::class, 'show'])->name('certificates.show');
+    Route::post('/enrollments/{enrollment}/certificates', [CertificatesController::class, 'store'])->name('enrollments.certificates.store');
 
     Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/{id}/read', [NotificationsController::class, 'read'])->name('notifications.read');

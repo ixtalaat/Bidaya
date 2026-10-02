@@ -11,9 +11,27 @@
                 {{ $enrollment->group->name }} ({{ $enrollment->group->course->name }}) — {{ $enrollment->status->label() }}
             </p>
         </div>
-        <a href="{{ route('enrollments.edit', $enrollment) }}" class="rounded clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
-            {{ __('students.edit_button') }}
-        </a>
+        <div class="flex shrink-0 gap-2">
+            @if ($enrollment->certificate !== null)
+                @can('view', $enrollment->certificate)
+                    <a href="{{ route('certificates.show', $enrollment->certificate) }}" class="clay-btn cursor-pointer bg-secondary px-3 py-1.5 text-sm font-extrabold text-slate-900">
+                        {{ __('certificates.view_button') }}
+                    </a>
+                @endcan
+            @elseif ($enrollment->status === \App\Enums\EnrollmentStatus::Completed)
+                @can('issue', [App\Models\Certificate::class, $enrollment])
+                    <form method="POST" action="{{ route('enrollments.certificates.store', $enrollment) }}">
+                        @csrf
+                        <button type="submit" class="clay-btn cursor-pointer bg-secondary px-3 py-1.5 text-sm font-extrabold text-slate-900">
+                            {{ __('certificates.issue_button') }}
+                        </button>
+                    </form>
+                @endcan
+            @endif
+            <a href="{{ route('enrollments.edit', $enrollment) }}" class="rounded clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
+                {{ __('students.edit_button') }}
+            </a>
+        </div>
     </div>
 
     <dl class="grid grid-cols-1 gap-3 text-sm md:grid-cols-2">
