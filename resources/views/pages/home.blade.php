@@ -92,6 +92,27 @@
     </div>
 </div>
 
+@if ($galleryPhotos->isNotEmpty())
+    <div class="mt-12">
+        <div class="flex items-center justify-between">
+            <h2 class="font-display text-2xl font-bold text-slate-900 md:text-3xl">{{ __('gallery.title') }}</h2>
+            <a href="{{ route('gallery') }}" class="clay-btn cursor-pointer bg-white px-4 py-2 text-sm font-extrabold text-slate-900">
+                {{ __('gallery.view_gallery') }}
+            </a>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-5 md:grid-cols-4">
+            @foreach ($galleryPhotos as $photo)
+                <button type="button" data-lightbox="{{ Storage::url($photo->photo_path) }}" data-caption="{{ $photo->title }}"
+                        class="reveal clay-card cursor-pointer overflow-hidden p-0 transition-transform hover:-translate-y-1" aria-label="{{ $photo->title }}">
+                    <img src="{{ Storage::url($photo->photo_path) }}" alt="{{ $photo->title }}" loading="lazy"
+                         class="h-44 w-full object-cover">
+                    <p class="truncate px-3 py-2 text-start text-sm font-bold text-slate-900">{{ $photo->title }}</p>
+                </button>
+            @endforeach
+        </div>
+    </div>
+@endif
+
 <div class="reveal mt-12 rounded-3xl border-[3px] border-slate-900 bg-slate-900 p-8 text-center text-white shadow-[8px_8px_0_#f59e0b]">
     <h2 class="font-display text-2xl font-bold md:text-3xl">{{ __('pages.cta_title') }}</h2>
     <p class="mt-2 text-sm text-slate-300">{{ __('pages.cta_subtitle') }}</p>

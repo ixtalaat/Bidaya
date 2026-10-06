@@ -105,4 +105,8 @@ return [
         'failed' => 'Failed',
         'skipped' => 'Skipped',
     ],
+    'gallery_types' => [
+        'photo' => 'Photo',
+        'video' => 'Video',
+    ],
 ];

@@ -137,4 +137,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    document.querySelectorAll('[data-lightbox]').forEach((element) => {
+        element.addEventListener('click', () => {
+            Swal.fire({
+                imageUrl: element.dataset.lightbox,
+                imageAlt: element.dataset.caption || '',
+                showConfirmButton: false,
+                showCloseButton: true,
+                background: '#0f172a',
+                padding: '12px',
+            });
+        });
+    });
 });

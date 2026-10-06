@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\CourseStatus;
+use App\Enums\GalleryType;
 use App\Enums\GroupStatus;
 use App\Enums\StudentStatus;
 use App\Enums\TeacherStatus;
@@ -10,10 +11,12 @@ use App\Http\Requests\StoreContactRequest;
 use App\Mail\ContactMessageReceived;
 use App\Models\ContactMessage;
 use App\Models\Course;
+use App\Models\GalleryItem;
 use App\Models\Group;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -34,6 +37,12 @@ class PagesController extends Controller
                 ->withCount('groups')
                 ->orderBy('name')
                 ->limit(6)
+                ->get(),
+            'galleryPhotos' => GalleryItem::published()
+                ->where('type', GalleryType::Photo)
+                ->whereNotNull('photo_path')
+                ->orderByDesc('id')
+                ->limit(4)
                 ->get(),
         ]);
     }
@@ -69,6 +78,19 @@ class PagesController extends Controller
         ]);
 
         return view('pages.course-details', ['course' => $course]);
+    }
+
+    public function gallery(Request $request): View
+    {
+        $type = GalleryType::tryFrom($request->string('type')->toString());
+
+        $items = GalleryItem::published()
+            ->when($type, fn ($query, GalleryType $type) => $query->where('type', $type))
+            ->orderByDesc('id')
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('pages.gallery', ['items' => $items, 'activeType' => $type]);
     }
 
     public function sendContact(StoreContactRequest $request): RedirectResponse

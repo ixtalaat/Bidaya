@@ -105,4 +105,8 @@ return [
         'failed' => 'فشل',
         'skipped' => 'تم التخطي',
     ],
+    'gallery_types' => [
+        'photo' => 'صورة',
+        'video' => 'فيديو',
+    ],
 ];

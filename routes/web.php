@@ -12,6 +12,7 @@ use App\Http\Controllers\ContactMessagesController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnrollmentsController;
+use App\Http\Controllers\GalleriesController;
 use App\Http\Controllers\GroupSchedulesController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\GuardiansController;
@@ -33,6 +34,7 @@ Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::post('/contact', [PagesController::class, 'sendContact'])->middleware('throttle:5,1')->name('contact.send');
 Route::get('/catalog', [PagesController::class, 'courses'])->name('catalog');
 Route::get('/catalog/{course}', [PagesController::class, 'courseDetails'])->name('catalog.show');
+Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
 
 Route::get('/lang/{locale}', function (string $locale) {
     if (in_array($locale, SetLocale::SUPPORTED_LOCALES, true)) {
@@ -66,11 +68,12 @@ Route::middleware('auth')->group(function (): void {
     Route::middleware('role:super_admin,manager')->group(function (): void {
         Route::resource('parents', GuardiansController::class)->parameters(['parents' => 'guardian']);
         Route::resource('students', StudentsController::class);
-        Route::resource('contact-messages', ContactMessagesController::class)->only(['index', 'show', 'destroy']);
         Route::resource('courses', CoursesController::class);
         Route::resource('teachers', TeachersController::class);
         Route::resource('groups', GroupsController::class);
         Route::resource('enrollments', EnrollmentsController::class)->except(['destroy']);
+        Route::resource('contact-messages', ContactMessagesController::class)->only(['index', 'show', 'destroy']);
+        Route::resource('galleries', GalleriesController::class);
         Route::get('/reports/attendance', [ReportsController::class, 'attendance'])->name('reports.attendance');
         Route::get('/reports/progress', [ReportsController::class, 'progress'])->name('reports.progress');
         Route::get('/reports/courses', [ReportsController::class, 'courses'])->name('reports.courses');

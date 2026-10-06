@@ -19,6 +19,7 @@
             @guest
                 <x-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('layout.home') }}</x-nav-link>
                 <x-nav-link :href="route('catalog')" :active="request()->routeIs('catalog*')">{{ __('pages.courses_nav') }}</x-nav-link>
+                <x-nav-link :href="route('gallery')" :active="request()->routeIs('gallery')">{{ __('gallery.title') }}</x-nav-link>
                 <x-nav-link :href="route('about')" :active="request()->routeIs('about')">{{ __('pages.about_nav') }}</x-nav-link>
                 <x-nav-link :href="route('contact')" :active="request()->routeIs('contact')">{{ __('pages.contact_nav') }}</x-nav-link>
             @endguest
@@ -58,6 +59,7 @@
                             <x-nav-link dropdownItem :href="route('teachers.index')" :active="request()->routeIs('teachers.*')">{{ __('teachers.title') }}</x-nav-link>
                             <x-nav-link dropdownItem :href="route('students.index')" :active="request()->routeIs('students.*')">{{ __('students.title') }}</x-nav-link>
                             <x-nav-link dropdownItem :href="route('parents.index')" :active="request()->routeIs('parents.*')">{{ __('guardians.title') }}</x-nav-link>
+                            <x-nav-link dropdownItem :href="route('galleries.index')" :active="request()->routeIs('galleries.*')">{{ __('gallery.manage_title') }}</x-nav-link>
                             <x-nav-link dropdownItem :href="route('contact-messages.index')" :active="request()->routeIs('contact-messages.*')">{{ __('pages.inbox_title') }}</x-nav-link>
                         </div>
                     </div>
@@ -123,6 +125,7 @@
         <nav class="mx-auto max-w-6xl space-y-1 px-4 py-4 text-sm" aria-label="Mobile">
             <x-nav-link dropdownItem :href="route('home')" :active="request()->routeIs('home')">{{ __('layout.home') }}</x-nav-link>
             <x-nav-link dropdownItem :href="route('catalog')" :active="request()->routeIs('catalog*')">{{ __('pages.courses_nav') }}</x-nav-link>
+            <x-nav-link dropdownItem :href="route('gallery')" :active="request()->routeIs('gallery')">{{ __('gallery.title') }}</x-nav-link>
             <x-nav-link dropdownItem :href="route('about')" :active="request()->routeIs('about')">{{ __('pages.about_nav') }}</x-nav-link>
             <x-nav-link dropdownItem :href="route('contact')" :active="request()->routeIs('contact')">{{ __('pages.contact_nav') }}</x-nav-link>
             @auth
@@ -149,6 +152,7 @@
                     <x-nav-link dropdownItem :href="route('students.index')" :active="request()->routeIs('students.*')">{{ __('students.title') }}</x-nav-link>
                     <x-nav-link dropdownItem :href="route('parents.index')" :active="request()->routeIs('parents.*')">{{ __('guardians.title') }}</x-nav-link>
                     <x-nav-link dropdownItem :href="route('contact-messages.index')" :active="request()->routeIs('contact-messages.*')">{{ __('pages.inbox_title') }}</x-nav-link>
+                    <x-nav-link dropdownItem :href="route('galleries.index')" :active="request()->routeIs('galleries.*')">{{ __('gallery.manage_title') }}</x-nav-link>
                     <p class="px-3 pb-1 pt-3 text-xs font-extrabold uppercase tracking-wide text-slate-400">{{ __('layout.reports') }}</p>
                     <x-nav-link dropdownItem :href="route('reports.attendance')" :active="request()->routeIs('reports.attendance')">{{ __('reports.attendance_title') }}</x-nav-link>
                     <x-nav-link dropdownItem :href="route('reports.progress')" :active="request()->routeIs('reports.progress')">{{ __('reports.progress_title') }}</x-nav-link>
@@ -185,6 +189,7 @@
             <ul class="mt-3 space-y-2 text-sm">
                 <li><a href="{{ route('home') }}" class="font-semibold text-slate-600 hover:text-primary">{{ __('layout.home') }}</a></li>
                 <li><a href="{{ route('catalog') }}" class="font-semibold text-slate-600 hover:text-primary">{{ __('pages.courses_nav') }}</a></li>
+                <li><a href="{{ route('gallery') }}" class="font-semibold text-slate-600 hover:text-primary">{{ __('gallery.title') }}</a></li>
                 <li><a href="{{ route('about') }}" class="font-semibold text-slate-600 hover:text-primary">{{ __('pages.about_nav') }}</a></li>
                 <li><a href="{{ route('contact') }}" class="font-semibold text-slate-600 hover:text-primary">{{ __('pages.contact_nav') }}</a></li>
             </ul>
