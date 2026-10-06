@@ -37,9 +37,7 @@ class UpdateEnrollmentStatusAction
             ]);
 
             if ($newStatus === EnrollmentStatus::Cancelled) {
-                $enrollment->invoices()
-                    ->where('status', InvoiceStatus::Pending)
-                    ->update(['status' => InvoiceStatus::Cancelled]);
+                $this->settleBillingOnCancel($enrollment);
             }
 
             $this->audit->log(
@@ -52,5 +50,46 @@ class UpdateEnrollmentStatusAction
 
             return $enrollment->refresh();
         });
+    }
+
+    /**
+     * Move open invoices to a covered sibling instead of voiding them.
+     */
+    private function settleBillingOnCancel(Enrollment $enrollment): void
+    {
+        $orphans = Enrollment::where('student_id', $enrollment->student_id)
+            ->active()
+            ->where('id', '!=', $enrollment->id)
+            ->where('covered_by_enrollment_id', $enrollment->id)
+            ->orderBy('id')
+            ->lockForUpdate()
+            ->get();
+
+        if ($orphans->isEmpty()) {
+            $enrollment->invoices()
+                ->where('status', InvoiceStatus::Pending)
+                ->update(['status' => InvoiceStatus::Cancelled]);
+
+            return;
+        }
+
+        $successor = $orphans->shift();
+        $successor->update(['covered_by_enrollment_id' => null]);
+
+        $enrollment->invoices()
+            ->whereIn('status', [InvoiceStatus::Pending, InvoiceStatus::PartiallyPaid])
+            ->update(['enrollment_id' => $successor->id]);
+
+        foreach ($orphans as $orphan) {
+            $orphan->update(['covered_by_enrollment_id' => $successor->id]);
+        }
+
+        $this->audit->log(
+            auth()->user(),
+            'enrollment.billing_transferred',
+            $successor,
+            ['covered_by_enrollment_id' => $enrollment->id],
+            ['covered_by_enrollment_id' => null]
+        );
     }
 }

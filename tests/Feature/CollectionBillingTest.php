@@ -164,4 +164,45 @@ class CollectionBillingTest extends TestCase
         $this->assertNotNull($secondEnrollment->covered_by_enrollment_id);
         $this->assertSame(0, $secondEnrollment->invoices()->count());
     }
+
+    public function test_cancelling_the_covering_enrollment_transfers_open_invoices(): void
+    {
+        $manager = User::factory()->withRole(Role::Manager)->create();
+        $course = Course::factory()->create(['monthly_fee' => 350, 'status' => CourseStatus::Active]);
+        $firstGroup = Group::factory()->create(['course_id' => $course->id, 'status' => GroupStatus::Active]);
+        $secondGroup = Group::factory()->create(['course_id' => $course->id, 'status' => GroupStatus::Active]);
+        $thirdGroup = Group::factory()->create(['course_id' => $course->id, 'status' => GroupStatus::Active]);
+        $student = Student::factory()->create(['status' => StudentStatus::Active]);
+
+        $payload = fn (Group $group): array => [
+            'student_id' => $student->id,
+            'group_id' => $group->id,
+            'enrollment_date' => today()->toDateString(),
+            'start_date' => today()->toDateString(),
+            'discount_amount' => 0,
+        ];
+
+        $this->actingAs($manager)->post(route('enrollments.store'), $payload($firstGroup))->assertRedirect();
+        $this->actingAs($manager)->post(route('enrollments.store'), $payload($secondGroup))->assertRedirect();
+        $this->actingAs($manager)->post(route('enrollments.store'), $payload($thirdGroup))->assertRedirect();
+
+        $firstEnrollment = Enrollment::where('student_id', $student->id)->where('group_id', $firstGroup->id)->firstOrFail();
+        $invoice = $firstEnrollment->invoices()->firstOrFail();
+
+        $this->actingAs($manager)->put(route('enrollments.update', $firstEnrollment), [
+            'status' => EnrollmentStatus::Cancelled->value,
+        ])->assertRedirect();
+
+        $secondEnrollment = Enrollment::where('student_id', $student->id)->where('group_id', $secondGroup->id)->firstOrFail();
+        $thirdEnrollment = Enrollment::where('student_id', $student->id)->where('group_id', $thirdGroup->id)->firstOrFail();
+
+        $this->assertNull($secondEnrollment->fresh()->covered_by_enrollment_id);
+        $this->assertSame($secondEnrollment->id, $invoice->fresh()->enrollment_id);
+        $this->assertSame(InvoiceStatus::Pending, $invoice->fresh()->status);
+        $this->assertSame($secondEnrollment->id, $thirdEnrollment->fresh()->covered_by_enrollment_id);
+        $this->assertDatabaseHas('audit_logs', [
+            'action' => 'enrollment.billing_transferred',
+            'entity_id' => $secondEnrollment->id,
+        ]);
+    }
 }
