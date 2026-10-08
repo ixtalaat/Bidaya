@@ -260,6 +260,26 @@ class SessionsTest extends TestCase
         $this->assertDatabaseHas('class_sessions', ['id' => $session->id]);
     }
 
+    public function test_completed_sessions_cannot_be_rescheduled(): void
+    {
+        $manager = User::factory()->withRole(Role::Manager)->create();
+        $session = Session::factory()->create([
+            'date' => '2026-10-05',
+            'status' => SessionStatus::Completed,
+        ]);
+
+        $this->actingAs($manager)->get(route('sessions.edit', $session))->assertForbidden();
+
+        $response = $this->actingAs($manager)->put(route('sessions.update', $session), [
+            'date' => '2026-10-06',
+            'start_time' => '17:00',
+            'end_time' => '18:00',
+        ]);
+
+        $response->assertSessionHasErrors('session');
+        $this->assertSame('2026-10-05', $session->fresh()->date->toDateString());
+    }
+
     public function test_parents_and_accountants_cannot_list_sessions(): void
     {
         $parent = User::factory()->withRole(Role::Parent)->create();

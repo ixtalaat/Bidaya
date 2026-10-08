@@ -120,6 +120,8 @@ class SessionsController extends Controller
      */
     public function edit(Session $session): View
     {
+        abort_unless($session->isEditable(), 403);
+
         $session->load('group.course');
 
         return view('sessions.edit', ['session' => $session]);
@@ -130,6 +132,10 @@ class SessionsController extends Controller
      */
     public function update(UpdateSessionRequest $request, Session $session, SessionConflictService $conflicts): RedirectResponse
     {
+        if (! $session->isEditable()) {
+            return back()->withErrors(['session' => __('sessions.completed_locked')]);
+        }
+
         $classroom = $request->input('classroom') ?? $session->group->classroom;
 
         $found = $conflicts->findConflicts(

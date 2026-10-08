@@ -15,9 +15,4 @@ enum Role: string
     {
         return __("roles.{$this->value}");
     }
-
-    public function isInternalStaff(): bool
-    {
-        return in_array($this, [self::SuperAdmin, self::Manager, self::Teacher, self::Accountant], true);
-    }
 }

@@ -17,9 +17,11 @@
             </p>
         </div>
         @can('create', \App\Models\Session::class)
-            <a href="{{ route('sessions.edit', $session) }}" class="shrink-0 rounded clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
-                {{ __('students.edit_button') }}
-            </a>
+            @if ($session->isEditable())
+                <a href="{{ route('sessions.edit', $session) }}" class="shrink-0 rounded clay-btn cursor-pointer bg-white px-3 py-1.5 text-sm font-extrabold text-slate-900">
+                    {{ __('students.edit_button') }}
+                </a>
+            @endif
         @endcan
     </div>
 

@@ -51,7 +51,7 @@
                 <h3 class="mb-1 text-sm font-bold">{{ __('dashboard.recent_grades') }}</h3>
                 <ul class="space-y-1 text-sm">
                     @forelse ($child['recentGrades'] as $grade)
-                        <li>{{ $grade->assessment->name }}: {{ number_format($grade->score, 2) }} / {{ number_format($grade->assessment->max_score, 2) }}</li>
+                        <li>{{ $grade->assessment->name }}: {{ number_format($grade->score, 2) }} / {{ number_format($grade->assessment->max_score, 2) }}{{ $grade->percentage !== null ? ' ('.$grade->percentage.'%)' : '' }}</li>
                     @empty
                         <li class="text-slate-500">—</li>
                     @endforelse

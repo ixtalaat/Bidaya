@@ -25,6 +25,5 @@ return [
     'deleted' => 'تم حذف ولي الأمر.',
     'user_account' => 'حساب الدخول',
     'no_account' => 'بدون حساب دخول',
-    'select_account' => 'اختر الحساب…',
     'user_must_be_parent' => 'يجب أن يكون الحساب المرتبط لحساب ولي أمر.',
 ];

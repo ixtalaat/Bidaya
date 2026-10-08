@@ -202,10 +202,7 @@ class DashboardController extends Controller
         $row = Attendance::toBase()
             ->whereIn('session_id', $sessionIds)
             ->selectRaw('count(*) as total')
-            ->selectRaw('sum(case when status in (?, ?) then 1 else 0 end) as attended', [
-                AttendanceStatus::Present->value,
-                AttendanceStatus::Late->value,
-            ])
+            ->selectRaw('sum(case when status in (?, ?) then 1 else 0 end) as attended', AttendanceStatus::attendedValues())
             ->first();
 
         return $this->rateFromRow($row);
@@ -224,10 +221,7 @@ class DashboardController extends Controller
         $row = Attendance::toBase()
             ->whereIn('enrollment_id', $enrollmentIds)
             ->selectRaw('count(*) as total')
-            ->selectRaw('sum(case when status in (?, ?) then 1 else 0 end) as attended', [
-                AttendanceStatus::Present->value,
-                AttendanceStatus::Late->value,
-            ])
+            ->selectRaw('sum(case when status in (?, ?) then 1 else 0 end) as attended', AttendanceStatus::attendedValues())
             ->first();
 
         return $this->rateFromRow($row);

@@ -29,7 +29,6 @@ return [
     'no_notifications' => 'No new notifications.',
     'unlinked_title' => 'Account not linked',
     'unlinked_body' => 'This login is not linked to a profile yet. Please ask the center administration to link your account.',
-    'view_all' => 'View all',
     'seats_filled' => ':enrolled / :capacity',
     'help_title' => 'How to use your account',
     'help_step1' => 'Each child card shows active courses, attendance rate, and any outstanding balance.',

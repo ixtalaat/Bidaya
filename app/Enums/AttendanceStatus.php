@@ -14,8 +14,16 @@ enum AttendanceStatus: string
         return __("enums.attendance_statuses.{$this->value}");
     }
 
+    /**
+     * @return array<int, string>
+     */
+    public static function attendedValues(): array
+    {
+        return [self::Present->value, self::Late->value];
+    }
+
     public function countsAsAttended(): bool
     {
-        return in_array($this, [self::Present, self::Late], true);
+        return in_array($this->value, self::attendedValues(), true);
     }
 }

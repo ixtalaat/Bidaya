@@ -25,6 +25,5 @@ return [
     'deleted' => 'Parent deleted.',
     'user_account' => 'Login account',
     'no_account' => 'No login account',
-    'select_account' => 'Select account…',
     'user_must_be_parent' => 'The linked account must belong to a parent user.',
 ];

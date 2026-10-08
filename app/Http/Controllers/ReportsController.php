@@ -83,7 +83,7 @@ class ReportsController extends Controller
                         fn ($sessions) => $sessions->whereDate('date', '>=', $from)->whereDate('date', '<=', $to)
                     ),
                     'attendances as attended_count' => fn ($query) => $query
-                        ->whereIn('status', [AttendanceStatus::Present, AttendanceStatus::Late])
+                        ->whereIn('status', AttendanceStatus::attendedValues())
                         ->whereHas(
                             'session',
                             fn ($sessions) => $sessions->whereDate('date', '>=', $from)->whereDate('date', '<=', $to)
@@ -126,10 +126,7 @@ class ReportsController extends Controller
             $attendanceMap = Attendance::toBase()
                 ->whereIn('enrollment_id', $enrollmentIds)
                 ->selectRaw('enrollment_id, count(*) as total')
-                ->selectRaw('sum(case when status in (?, ?) then 1 else 0 end) as attended', [
-                    AttendanceStatus::Present->value,
-                    AttendanceStatus::Late->value,
-                ])
+                ->selectRaw('sum(case when status in (?, ?) then 1 else 0 end) as attended', AttendanceStatus::attendedValues())
                 ->groupBy('enrollment_id')
                 ->get()
                 ->keyBy('enrollment_id');
@@ -209,10 +206,7 @@ class ReportsController extends Controller
             ->join($groups, "{$groups}.id", '=', "{$sessions}.group_id")
             ->whereIn("{$groups}.course_id", $courseIds)
             ->selectRaw("{$groups}.course_id as course_id, count({$attendances}.id) as total")
-            ->selectRaw("sum(case when {$attendances}.status in (?, ?) then 1 else 0 end) as attended", [
-                AttendanceStatus::Present->value,
-                AttendanceStatus::Late->value,
-            ])
+            ->selectRaw("sum(case when {$attendances}.status in (?, ?) then 1 else 0 end) as attended", AttendanceStatus::attendedValues())
             ->groupBy("{$groups}.course_id")
             ->get()
             ->keyBy('course_id');
