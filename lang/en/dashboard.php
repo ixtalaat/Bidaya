@@ -31,4 +31,8 @@ return [
     'unlinked_body' => 'This login is not linked to a profile yet. Please ask the center administration to link your account.',
     'view_all' => 'View all',
     'seats_filled' => ':enrolled / :capacity',
+    'help_title' => 'How to use your account',
+    'help_step1' => 'Each child card shows active courses, attendance rate, and any outstanding balance.',
+    'help_step2' => 'Open a course group to submit homework: write the answer, attach a photo of the notebook if needed, and press submit. You can resubmit anytime before grading.',
+    'help_step3' => 'Grades, attendance, and payment receipts appear here automatically. For anything else, use the Contact page or WhatsApp.',
 ];

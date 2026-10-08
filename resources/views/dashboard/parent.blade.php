@@ -3,7 +3,19 @@
 @section('title', __('dashboard.parent_title'))
 
 @section('content')
-<h1 class="mb-6 font-display text-xl font-bold">{{ __('dashboard.parent_title') }}</h1>
+<h1 class="mb-4 font-display text-xl font-bold">{{ __('dashboard.parent_title') }}</h1>
+
+<details class="reveal clay-card group mb-6 p-4">
+    <summary class="cursor-pointer list-none font-bold text-slate-900">
+        <span class="me-2 inline-flex h-7 w-7 items-center justify-center rounded-full border-2 border-slate-900 bg-secondary text-sm font-extrabold">?</span>
+        {{ __('dashboard.help_title') }}
+    </summary>
+    <ol class="mt-3 list-decimal space-y-1 ps-9 text-sm leading-relaxed text-slate-600">
+        <li>{{ __('dashboard.help_step1') }}</li>
+        <li>{{ __('dashboard.help_step2') }}</li>
+        <li>{{ __('dashboard.help_step3') }}</li>
+    </ol>
+</details>
 
 @forelse ($children as $child)
     <div class="mb-4 clay-card p-4">

@@ -43,5 +43,10 @@
             {{ __('auth.login_button') }}
         </button>
     </form>
+
+    <p class="mt-4 rounded-xl border-2 border-slate-900 bg-muted px-3 py-2 text-center text-xs text-slate-600">
+        {{ __('auth.parent_hint') }}
+        <a href="{{ route('contact') }}" class="font-bold text-primary hover:underline">{{ __('pages.contact_nav') }}</a>
+    </p>
 </div>
 @endsection

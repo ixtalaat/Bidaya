@@ -12,4 +12,5 @@ return [
     'login_button' => 'Sign in',
     'forgot_password' => 'Forgot your password?',
     'back_to_login' => 'Back to sign in',
+    'parent_hint' => 'Parent without an account yet? Ask the center to create one for you:',
 ];

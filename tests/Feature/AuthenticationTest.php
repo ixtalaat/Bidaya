@@ -21,6 +21,7 @@ class AuthenticationTest extends TestCase
 
         $response->assertOk();
         $response->assertSee(__('auth.login_title'));
+        $response->assertSee(__('auth.parent_hint'));
     }
 
     public function test_users_can_login_with_valid_credentials(): void

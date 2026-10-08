@@ -86,6 +86,7 @@ class DashboardsTest extends TestCase
         $response->assertOk();
         $response->assertSee('Omar Ahmed');
         $response->assertSee($group->course->name);
+        $response->assertSee(__('dashboard.help_title'));
     }
 
     public function test_unlinked_parents_see_guidance(): void
