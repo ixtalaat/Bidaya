@@ -41,6 +41,7 @@ return [
         'contact_phone' => env('CONTACT_PHONE', '+20 100 000 0000'),
         'contact_email' => env('CONTACT_EMAIL', 'hello@bidaya.test'),
         'contact_whatsapp' => env('CONTACT_WHATSAPP', ''),
+        'mysqldump_path' => env('MYSQLDUMP_PATH', 'mysqldump'),
     ],
 
     'whatsapp' => [
