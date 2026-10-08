@@ -1,58 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Bidaya — Kids Education Center LMS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Web-based LMS and center-management system for Bidaya Center (Mit Mohsen, Mit Ghamr, Dakahlia, Egypt).
+Laravel 13 · PHP 8.3+ · MySQL/MariaDB · Blade + Tailwind v4 · PHPUnit.
 
-## About Laravel
+One connected workflow: register students → enroll into groups → schedule sessions →
+record attendance → assess → collect monthly fees → track progress — for staff,
+teachers, parents, and accountants, in English and Arabic (RTL).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requirements
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Tool | Version | Notes |
+|---|---|---|
+| PHP | 8.3+ | Extensions: `gd`, `zip`, `pdo_mysql`, `mbstring`, `openssl` |
+| Composer | 2.x | |
+| Node + npm | 20+ | Frontend build |
+| MySQL / MariaDB | 8 / 10.4+ | Two databases: app + testing |
+| mysqldump | — | Ships with XAMPP/MySQL; set `MYSQLDUMP_PATH` if not on PATH |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+On XAMPP (Windows): enable `extension=gd` and `extension=zip` in `php.ini`,
+then start MySQL (tick **Svc** in the control panel so it survives reboots).
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Setup
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Create the databases, then configure `.env`:
 
-## Contributing
+```sql
+CREATE DATABASE bidaya CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE bidaya_testing CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```ini
+DB_DATABASE=bidaya
+ADMIN_EMAIL=admin@bidaya.test
+ADMIN_PASSWORD=password
+CONTACT_PHONE=+201121451378
+CONTACT_EMAIL=elsaftymariam555@gmail.com
+CONTACT_WHATSAPP=201121451378
+```
 
-## Code of Conduct
+```bash
+php artisan migrate --seed   # demo center: users, collection, groups, enrollment
+npm run dev                  # or: npm run build
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Demo logins (password: `password`): `admin@bidaya.test`, `teacher@bidaya.test`,
+`parent@bidaya.test`, `manager@bidaya.test`, `accountant@bidaya.test`.
 
-## Security Vulnerabilities
+## Testing
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Tests run against MySQL (`bidaya_testing` via `.env.testing` — same queries as production):
 
-## License
+```bash
+php artisan test --compact          # full suite
+php artisan test --filter=PaymentsTest
+vendor/bin/pint --dirty --format agent   # format before committing
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Daily operations
+
+```bash
+php artisan schedule:run        # cron every minute (session reminders 07:00, DB backup 02:00)
+php artisan app:backup-database # manual DB backup → storage/app/backups (keeps 7)
+php artisan app:send-session-reminders --date=2026-10-05
+```
+
+## Deployment (Railway)
+
+Repo prep is done: `railway/` scripts, DB sessions/cache/queue, public-disk uploads.
+
+1. Push `main` to GitHub, create a Railway project from the repo.
+2. Services: **app** (`npm run build`, pre-deploy `sh ./railway/init-app.sh`),
+   **MySQL plugin**, **cron** (`sh ./railway/run-cron.sh`), **worker**
+   (`sh ./railway/run-worker.sh`), volume on `/app/storage/app`.
+3. Set variables: `APP_KEY` (fresh `php artisan key:generate --show`),
+   `DB_*` from `${{MySQL.*}}`, `QUEUE_CONNECTION=database`,
+   `SESSION_DRIVER=database`, `SESSION_SECURE_COOKIE=true`,
+   `LOG_CHANNEL=stderr`, Gmail SMTP + `WHATSAPP_*` as needed.
+4. Create the first admin via Railway shell (production starts empty).
+
+## Conventions
+
+- Conventional Commits with scopes (`feat(enrollment): …`). Template: `.gitmessage`.
+- Thin controllers → Form Requests → Actions/Services → Models. Business rules
+  live in actions, enforced transactionally, covered by feature tests.
+- `app/Enums` for all statuses; bilingual `lang/en` + `lang/ar` (RTL layout).
+- Run the full suite + Pint before every commit.
