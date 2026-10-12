@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Enums\InvoiceStatus;
 use App\Enums\PaymentStatus;
 use Database\Factories\InvoiceFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -52,6 +54,12 @@ class Invoice extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    #[Scope]
+    protected function open(Builder $query): Builder
+    {
+        return $query->whereIn('status', [InvoiceStatus::Pending, InvoiceStatus::PartiallyPaid]);
     }
 
     public function paidTotal(): float

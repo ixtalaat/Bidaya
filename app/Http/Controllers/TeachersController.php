@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Teachers\CreateTeacherAction;
+use App\Actions\Teachers\DeleteTeacherAction;
 use App\Actions\Teachers\UpdateTeacherAction;
-use App\Enums\GroupStatus;
 use App\Enums\TeacherStatus;
 use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
@@ -95,13 +95,9 @@ class TeachersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Teacher $teacher): RedirectResponse
+    public function destroy(Teacher $teacher, DeleteTeacherAction $delete): RedirectResponse
     {
-        if ($teacher->groups()->where('status', GroupStatus::Active)->exists()) {
-            return back()->withErrors(['teacher' => __('teachers.has_active_groups')]);
-        }
-
-        $teacher->user->delete();
+        $delete->handle($teacher);
 
         return redirect()->route('teachers.index')->with('status', __('teachers.deleted'));
     }

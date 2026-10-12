@@ -91,5 +91,7 @@ Repo prep is done: `railway/` scripts, DB sessions/cache/queue, public-disk uplo
 - Conventional Commits with scopes (`feat(enrollment): …`). Template: `.gitmessage`.
 - Thin controllers → Form Requests → Actions/Services → Models. Business rules
   live in actions, enforced transactionally, covered by feature tests.
+- Controllers coordinate HTTP only (input, authorization, response) — no domain
+  decisions, calculations, or state-transition logic inside them.
 - `app/Enums` for all statuses; bilingual `lang/en` + `lang/ar` (RTL layout).
 - Run the full suite + Pint before every commit.

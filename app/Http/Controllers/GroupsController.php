@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Groups\DeleteGroupAction;
 use App\Enums\GroupStatus;
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
@@ -106,13 +107,9 @@ class GroupsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Group $group): RedirectResponse
+    public function destroy(Group $group, DeleteGroupAction $delete): RedirectResponse
     {
-        if ($group->enrollments()->active()->exists()) {
-            return back()->withErrors(['group' => __('groups.has_active_enrollments')]);
-        }
-
-        $group->delete();
+        $delete->handle($group);
 
         return redirect()->route('groups.index')->with('status', __('groups.deleted'));
     }

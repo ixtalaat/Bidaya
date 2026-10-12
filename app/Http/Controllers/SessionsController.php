@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Sessions\DeleteSessionAction;
 use App\Actions\Sessions\GenerateGroupSessionsAction;
 use App\Actions\Sessions\UpdateSessionStatusAction;
 use App\Enums\GroupStatus;
@@ -210,13 +211,9 @@ class SessionsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Session $session): RedirectResponse
+    public function destroy(Session $session, DeleteSessionAction $delete): RedirectResponse
     {
-        if ($session->status === SessionStatus::Completed) {
-            return back()->withErrors(['session' => __('sessions.completed_locked')]);
-        }
-
-        $session->delete();
+        $delete->handle($session);
 
         return redirect()->route('sessions.index')->with('status', __('sessions.deleted'));
     }

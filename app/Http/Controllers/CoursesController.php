@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Courses\DeleteCourseAction;
 use App\Enums\CourseStatus;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
@@ -89,13 +90,9 @@ class CoursesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Course $course): RedirectResponse
+    public function destroy(Course $course, DeleteCourseAction $delete): RedirectResponse
     {
-        if ($course->groups()->exists()) {
-            return back()->withErrors(['course' => __('courses.has_groups')]);
-        }
-
-        $course->delete();
+        $delete->handle($course);
 
         return redirect()->route('courses.index')->with('status', __('courses.deleted'));
     }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Actions\Payments\RecordPaymentAction;
 use App\Actions\Payments\RefundPaymentAction;
-use App\Enums\InvoiceStatus;
 use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
 use App\Http\Requests\StorePaymentRequest;
@@ -63,8 +62,7 @@ class PaymentsController extends Controller
      */
     public function create(Request $request): View
     {
-        $openInvoices = Invoice::query()
-            ->whereIn('status', [InvoiceStatus::Pending, InvoiceStatus::PartiallyPaid])
+        $openInvoices = Invoice::open()
             ->with(['enrollment.student', 'enrollment.group.course'])
             ->orderBy('due_date')
             ->orderBy('id')
