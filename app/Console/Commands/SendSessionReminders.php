@@ -15,11 +15,6 @@ use Illuminate\Console\Command;
 #[Description('Notify teachers about their scheduled sessions for the day')]
 class SendSessionReminders extends Command
 {
-    public function __construct(private WhatsAppNotifier $whatsapp)
-    {
-        parent::__construct();
-    }
-
     /**
      * Execute the console command.
      */
@@ -28,6 +23,9 @@ class SendSessionReminders extends Command
         ?string $date = null,
     ): int {
         $date ??= today()->toDateString();
+
+        // Resolved lazily so booting artisan never depends on the gateway binding.
+        $whatsapp = app(WhatsAppNotifier::class);
 
         $sessions = Session::whereDate('date', $date)
             ->where('status', SessionStatus::Scheduled)
@@ -53,7 +51,7 @@ class SendSessionReminders extends Command
 
             $teacher->user->notify(new SessionReminder($lines, $date));
 
-            $this->whatsapp->notifyPhone(
+            $whatsapp->notifyPhone(
                 $teacher->phone,
                 'session.reminder',
                 __('whatsapp.session_reminder', [
