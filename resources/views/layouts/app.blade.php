@@ -208,7 +208,7 @@
             <h2 class="font-display font-bold text-slate-900">{{ __('pages.info_title') }}</h2>
             <ul class="mt-3 space-y-2 text-sm text-slate-600">
                 <li>{{ __('pages.contact_address') }}</li>
-                <li dir="ltr" class="text-end sm:text-start">
+                <li dir="ltr" class="text-start">
                     <a href="tel:{{ config('services.bidaya.contact_phone') }}" class="font-semibold hover:text-primary">{{ config('services.bidaya.contact_phone') }}</a>
                 </li>
                 <li>
